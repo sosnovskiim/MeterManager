@@ -1,0 +1,2 @@
+rootProject.name = "MeterManager"
+include ':app'

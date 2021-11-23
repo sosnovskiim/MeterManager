@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/locationListFragment">
+
+    <fragment
+        android:id="@+id/locationListFragment"
+        android:name="com.sosnowskydevelop.metermanager.fragment.LocationListFragment"
+        android:label="LocationListFragment" >
+        <action
+            android:id="@+id/action_locationListFragment_to_meterListFragment"
+            app:destination="@id/meterListFragment" />
+        <action
+            android:id="@+id/action_locationListFragment_to_locationDetailsFragment"
+            app:destination="@id/locationDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/locationDetailsFragment"
+        android:name="com.sosnowskydevelop.metermanager.fragment.LocationDetailsFragment"
+        android:label="LocationDetailsDialog" >
+        <action
+            android:id="@+id/action_locationDetailsFragment_to_locationListFragment"
+            app:destination="@id/locationListFragment"
+            app:popUpTo="@id/locationListFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+    <fragment
+        android:id="@+id/meterListFragment"
+        android:name="com.sosnowskydevelop.metermanager.fragment.MeterListFragment"
+        android:label="meter_list_fragment"
+        tools:layout="@layout/meter_list_fragment" >
+        <action
+            android:id="@+id/action_meterListFragment_to_meterDetailsFragment"
+            app:destination="@id/meterDetailsFragment" />
+        <argument
+            android:name="locationId"
+            app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/meterDetailsFragment"
+        android:name="com.sosnowskydevelop.metermanager.fragment.MeterDetailsFragment"
+        android:label="MeterDetailsFragment" >
+        <action
+            android:id="@+id/action_meterDetailsFragment_to_meterListFragment"
+            app:destination="@id/meterListFragment"
+            app:popUpTo="@id/meterListFragment"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="locationId"
+            app:argType="integer" />
+    </fragment>
+
+</navigation>
