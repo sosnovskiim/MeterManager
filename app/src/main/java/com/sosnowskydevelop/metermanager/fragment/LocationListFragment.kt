@@ -1,9 +1,7 @@
 package com.sosnowskydevelop.metermanager.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -44,12 +42,22 @@ class LocationListFragment : Fragment() {
             locations?.let { locationAdapter.submitList(it) }
         })
 
-        binding.locationAddBtn.setOnClickListener {
-            findNavController().navigate(R.id.action_locationListFragment_to_locationDetailsFragment)
-        }
-
         binding.locationDeleteBtn.setOnClickListener{
             locationViewModel.deleteAll()
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.location_list_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.location_menu_add -> {
+                findNavController().navigate(R.id.action_locationListFragment_to_locationDetailsFragment)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 }
