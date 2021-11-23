@@ -3,4 +3,6 @@
     <string name="empty_not_saved">Empty</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="test_branch_to_check_anton_merge_request">Yep</string>
 </resources>
