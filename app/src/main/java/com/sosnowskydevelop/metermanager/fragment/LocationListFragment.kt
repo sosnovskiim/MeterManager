@@ -48,7 +48,9 @@ class LocationListFragment : Fragment() {
             locationViewModel.deleteAll()
         }
 
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.locations)
+        val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
+        actionBar?.title = resources.getString(R.string.locations)
+        actionBar?.setDisplayHomeAsUpEnabled(false)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

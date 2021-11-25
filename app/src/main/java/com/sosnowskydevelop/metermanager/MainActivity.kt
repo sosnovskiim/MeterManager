@@ -2,6 +2,7 @@ package com.sosnowskydevelop.metermanager
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,22 +11,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-//        super.onActivityResult(requestCode, resultCode, data)
-//        var name: String = ""
-//        var description: String?
-//        if (requestCode == locationDetailsActivityRequestCode && resultCode == Activity.RESULT_OK) {
-//            data?.getStringExtra("LOCATION_NAME")?.let {
-//                name = it
-//            }
-//            description = data?.getStringExtra("LOCATION_DESCRIPTION")
-//            val location = Location(0, name, description)
-//            locationViewModel.insert(location)
-//        } else {
-//            Toast.makeText(
-//                applicationContext,
-//                R.string.empty_not_saved,
-//                Toast.LENGTH_LONG).show()
-//        }
-//    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

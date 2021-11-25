@@ -53,5 +53,7 @@ class LocationDetailsFragment : Fragment() {
         } else {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit)
         }
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }
