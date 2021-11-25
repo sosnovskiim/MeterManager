@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sosnowskydevelop.metermanager.*
@@ -57,7 +58,9 @@ class LocationListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.location_menu_add -> {
-                findNavController().navigate(R.id.action_locationListFragment_to_locationDetailsFragment)
+                findNavController().navigate(
+                    LocationListFragmentDirections.actionLocationListFragmentToLocationDetailsFragment(0))
+                //findNavController().navigate(R.id.action_locationListFragment_to_locationDetailsFragment)
                 true
             }
             else -> super.onOptionsItemSelected(item)

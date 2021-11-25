@@ -5,9 +5,11 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.sosnowskydevelop.metermanager.LocationViewModel
 import com.sosnowskydevelop.metermanager.LocationViewModelFactory
 import com.sosnowskydevelop.metermanager.MetersApplication
@@ -42,6 +44,14 @@ class LocationDetailsFragment : Fragment() {
                 locationViewModel.insert(Location(0, name, description))
                 findNavController().navigate(R.id.action_locationDetailsFragment_to_locationListFragment)
             }
+        }
+
+        val args: LocationDetailsFragmentArgs by navArgs()
+        val locationId = args.locationId
+        if (locationId == 0) {
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_new)
+        } else {
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit)
         }
     }
 }
