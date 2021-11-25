@@ -2,6 +2,7 @@ package com.sosnowskydevelop.metermanager.fragment
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -45,6 +46,8 @@ class LocationListFragment : Fragment() {
         binding.locationDeleteBtn.setOnClickListener{
             locationViewModel.deleteAll()
         }
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.locations)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
