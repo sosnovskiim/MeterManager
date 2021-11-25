@@ -5,6 +5,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -43,5 +44,7 @@ class LocationDetailsFragment : Fragment() {
                 findNavController().navigate(R.id.action_locationDetailsFragment_to_locationListFragment)
             }
         }
+
+        (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 }
