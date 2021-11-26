@@ -15,6 +15,10 @@
         <action
             android:id="@+id/action_locationListFragment_to_locationDetailsFragment"
             app:destination="@id/locationDetailsFragment" />
+        <argument
+            android:name="isDeleteLocation"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/locationDetailsFragment"
@@ -37,6 +41,9 @@
         <action
             android:id="@+id/action_meterListFragment_to_meterDetailsFragment"
             app:destination="@id/meterDetailsFragment" />
+        <action
+            android:id="@+id/action_meterListFragment_to_locationListFragment"
+            app:destination="@id/locationListFragment" />
         <argument
             android:name="locationId"
             app:argType="integer" />

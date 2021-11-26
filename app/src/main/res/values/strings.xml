@@ -3,4 +3,9 @@
     <string name="locations">Locations</string>
     <string name="location_edit">Edit location</string>
     <string name="location_new">New location</string>
+    <string name="location_delete_dialog_title">Delete</string>
+    <string name="location_delete_dialog_message">Are you sure you want to delete</string>
+    <string name="location_delete_dialog_positive">Yes</string>
+    <string name="location_delete_dialog_negative">No</string>
+    <string name="location_delete_toast">Location deleted</string>
 </resources>
