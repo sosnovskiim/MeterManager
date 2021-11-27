@@ -50,15 +50,6 @@ class LocationListFragment : Fragment() {
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
         actionBar?.title = resources.getString(R.string.locations)
         actionBar?.setDisplayHomeAsUpEnabled(false)
-
-        val args: LocationListFragmentArgs by navArgs()
-        if (args.isDeleteLocation) {
-            Toast.makeText(
-                requireContext(),
-                resources.getString(R.string.location_delete_toast),
-                Toast.LENGTH_LONG
-            ).show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
