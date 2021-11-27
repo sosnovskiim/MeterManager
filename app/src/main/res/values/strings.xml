@@ -16,4 +16,8 @@
     <string name="location_delete_dialog_positive">Yes</string>
     <string name="location_delete_dialog_negative">No</string>
     <string name="location_delete_toast">Location deleted</string>
+    <string name="delete_hint">Delete</string>
+    <string name="edit_hint">Edit</string>
+    <string name="location_added">Location added</string>
+    <string name="location_edited">Location edited</string>
 </resources>

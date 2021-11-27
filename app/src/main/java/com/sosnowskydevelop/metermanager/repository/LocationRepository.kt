@@ -22,6 +22,12 @@ class LocationRepository(private val locationDao: LocationDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    suspend fun update(location: Location) {
+        locationDao.update(location)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun deleteAllLocations() {
         locationDao.deleteAllLocations()
     }

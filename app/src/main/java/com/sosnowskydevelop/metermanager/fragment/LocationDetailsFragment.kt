@@ -21,8 +21,13 @@ import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.databinding.LocationDetailsFragmentBinding
 
 class LocationDetailsFragment : Fragment() {
+
     private lateinit var binding: LocationDetailsFragmentBinding
-    private lateinit var name: EditText
+    private lateinit var editTextName: EditText
+    private var isNew = true
+    private var isChanged = false
+    private lateinit var location: Location
+
     private val locationViewModel: LocationViewModel by viewModels {
         LocationViewModelFactory((activity?.application as MetersApplication).locationRepository)
     }
@@ -41,7 +46,7 @@ class LocationDetailsFragment : Fragment() {
                 binding.locationNameEdittext.background = resources.getDrawable(R.drawable.edit_text_border) // TODO replace deprecated method
             }
         })
-        name = binding.locationNameEdittext
+        editTextName = binding.locationNameEdittext
         return binding.root
     }
 
@@ -50,10 +55,16 @@ class LocationDetailsFragment : Fragment() {
 
         val args: LocationDetailsFragmentArgs by navArgs()
         val locationId = args.locationId
-        if (locationId == 0) {
+        isNew = locationId == 0
+        if (isNew) {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_new)
         } else {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit)
+            locationViewModel.getLocationById(locationId).observe(this, {
+                location = it
+                binding.locationNameEdittext.setText(it.name)
+                binding.locationDescriptionEdittext.setText(it.description)
+            })
         }
 
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -66,17 +77,35 @@ class LocationDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.location_menu_save -> {
-                locationViewModel.isLocationNameUnique(name.text.toString())
-                if (TextUtils.isEmpty(name.text)) {
+                if (TextUtils.isEmpty(editTextName.text)) {
                     locationNameError(R.string.input_location_name_empty_err)
-                } else if (!locationViewModel.isLocationNameUnique(name.text.toString())) {
-                    locationNameError(R.string.input_location_name_duplicate_err)
-                }
-                else {
+                } else {
                     val description = binding.locationDescriptionEdittext.text.toString()
-                    locationViewModel.insert(Location(0, name.text.toString(), description))
-                    findNavController().navigate(
-                        LocationDetailsFragmentDirections.actionLocationDetailsFragmentToLocationListFragment())
+                    if (isNew) {
+                        if (!locationViewModel.isLocationNameUnique(editTextName.text.toString(), 0)) {
+                            locationNameError(R.string.input_location_name_duplicate_err)
+                        } else {
+                            locationViewModel.insert(Location(0, editTextName.text.toString(), description))
+                            isChanged = true
+                            closeOk(R.string.location_added)
+                        }
+                    } else {
+                        if (!locationViewModel.isLocationNameUnique(editTextName.text.toString(), location.id)
+                        ) {
+                            locationNameError(R.string.input_location_name_duplicate_err)
+                        } else {
+                            if (location.name != editTextName.text.toString()) {
+                                location.name != editTextName.text.toString()
+                                isChanged = true
+                            }
+                            if (location.description != description) {
+                                location.description = description
+                                isChanged = true
+                            }
+                            locationViewModel.update(location)
+                            closeOk(R.string.location_edited)
+                        }
+                    }
                 }
                 true
             }
@@ -86,7 +115,13 @@ class LocationDetailsFragment : Fragment() {
 
     private fun locationNameError(messageId: Int) {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
-        name.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
-        name.requestFocus()
+        editTextName.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
+        editTextName.requestFocus()
+    }
+
+    private fun closeOk(messageId: Int) {
+        if (isChanged) {Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()}
+        findNavController().navigate(
+            LocationDetailsFragmentDirections.actionLocationDetailsFragmentToLocationListFragment())
     }
 }

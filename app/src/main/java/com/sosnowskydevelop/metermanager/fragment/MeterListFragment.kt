@@ -121,6 +121,11 @@ class MeterListFragment : Fragment() {
                 dialog.show()
                 true
             }
+            R.id.edit_location -> {
+                findNavController().navigate(
+                    MeterListFragmentDirections.actionMeterListFragmentToLocationDetailsFragment(location.id))
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }

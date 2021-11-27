@@ -47,6 +47,9 @@
         <argument
             android:name="locationId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_meterListFragment_to_locationDetailsFragment"
+            app:destination="@id/locationDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/meterDetailsFragment"

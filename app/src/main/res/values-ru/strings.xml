@@ -16,4 +16,8 @@
     <string name="location_delete_dialog_positive">Да</string>
     <string name="location_delete_dialog_negative">Нет</string>
     <string name="location_delete_toast">Помещение удалено</string>
+    <string name="delete_hint">Удалить</string>
+    <string name="edit_hint">Редактировать</string>
+    <string name="location_added">Помещение добавлено</string>
+    <string name="location_edited">Помещение изменено</string>
 </resources>

@@ -9,7 +9,7 @@ data class Location(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
     val id: Int,
-    val name: String,
-    val description: String?) {
+    var name: String,
+    var description: String?) {
     // TODO add list of meters
 }

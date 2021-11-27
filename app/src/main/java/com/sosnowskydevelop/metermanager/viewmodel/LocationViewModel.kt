@@ -18,6 +18,10 @@ class LocationViewModel(private val locationRepository: LocationRepository) : Vi
         locationRepository.insert(location)
     }
 
+    fun update(location: Location) = viewModelScope.launch {
+        locationRepository.update(location)
+    }
+
     fun deleteAll() = viewModelScope.launch {
         locationRepository.deleteAllLocations()
     }
@@ -26,9 +30,9 @@ class LocationViewModel(private val locationRepository: LocationRepository) : Vi
         locationRepository.deleteLocation(location = location)
     }
 
-    fun isLocationNameUnique(name: String): Boolean {
+    fun isLocationNameUnique(name: String, id: Int): Boolean {
         allLocations.value?.forEach {
-            if (it.name == name) {
+            if (it.name == name && it.id != id) {
                 return false
             }
         }
