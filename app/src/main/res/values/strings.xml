@@ -3,4 +3,12 @@
     <string name="locations">Locations</string>
     <string name="location_edit">Edit location</string>
     <string name="location_new">New location</string>
+    <string name="add_new_location">Add new location</string>
+    <string name="save_new_location">Save new location</string>
+    <string name="new_location_name_label">Name</string>
+    <string name="new_location_name_hint">Input name</string>
+    <string name="new_location_description_label">Description</string>
+    <string name="new_location_description_hint">Input description</string>
+    <string name="input_location_name_empty_err">Input location name</string>
+    <string name="input_location_name_duplicate_err">Location name must be unique</string>
 </resources>

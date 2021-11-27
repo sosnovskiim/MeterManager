@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.sosnowskydevelop.metermanager.MeterViewModel
-import com.sosnowskydevelop.metermanager.MeterViewModelFactory
+import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModel
+import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModelFactory
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.Unit
 import com.sosnowskydevelop.metermanager.data.Meter

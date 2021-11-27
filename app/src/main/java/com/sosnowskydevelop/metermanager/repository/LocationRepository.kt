@@ -1,16 +1,12 @@
 package com.sosnowskydevelop.metermanager.repository
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import com.sosnowskydevelop.metermanager.dao.LocationDao
 import com.sosnowskydevelop.metermanager.data.Location
-import kotlinx.coroutines.flow.Flow
 
 class LocationRepository(private val locationDao: LocationDao) {
-    val allLocations: Flow<List<Location>> = locationDao.getAllLocations()
-
-    // By default Room runs suspend queries off the main thread, therefore, we don't need to
-    // implement anything else to ensure we're not doing long running database work
-    // off the main thread.
+    val allLocations: LiveData<List<Location>> = locationDao.getAllLocations()
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread

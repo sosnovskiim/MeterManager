@@ -1,4 +1,4 @@
-package com.sosnowskydevelop.metermanager
+package com.sosnowskydevelop.metermanager.viewmodel
 
 import androidx.lifecycle.*
 import com.sosnowskydevelop.metermanager.data.Meter

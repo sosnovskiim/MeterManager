@@ -4,28 +4,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"/>
+            android:text="@string/new_location_name_label"
+            android:textSize="@dimen/main_font_size"
+            android:textColor="@color/main_text"
+            android:paddingHorizontal="@dimen/medium_padding"
+            android:layout_marginHorizontal="@dimen/details_margin"/>
         <EditText
             android:id="@+id/location_name_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp"
+            android:hint="@string/new_location_name_hint"
+            android:textSize="@dimen/main_font_size"
+            android:textColor="@color/main_text"
+            android:paddingHorizontal="@dimen/medium_padding"
+            android:background="@drawable/edit_text_border"
+            android:layout_marginHorizontal="@dimen/details_margin"
+            android:importantForAutofill="no"
+            android:inputType="text" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description"/>
+            android:text="@string/new_location_description_label"
+            android:textSize="@dimen/main_font_size"
+            android:textColor="@color/main_text"
+            android:paddingHorizontal="@dimen/medium_padding"
+            android:layout_marginHorizontal="@dimen/details_margin"
+            android:layout_marginTop="20dp"/>
         <EditText
             android:id="@+id/location_description_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <Button
-            android:id="@+id/location_save_btn"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"/>
-
+            android:hint="@string/new_location_description_hint"
+            android:textSize="@dimen/main_font_size"
+            android:textColor="@color/main_text"
+            android:paddingHorizontal="@dimen/medium_padding"
+            android:background="@drawable/edit_text_border"
+            android:layout_marginHorizontal="@dimen/details_margin"
+            android:inputType="textMultiLine"
+            android:importantForAutofill="no"
+            android:lines="6"
+            android:gravity="top|start"
+            android:scrollbars="vertical" />
     </LinearLayout>
 </layout>

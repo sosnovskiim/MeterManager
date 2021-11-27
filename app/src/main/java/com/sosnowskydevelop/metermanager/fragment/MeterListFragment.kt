@@ -12,8 +12,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sosnowskydevelop.metermanager.adapter.MeterListAdapter
-import com.sosnowskydevelop.metermanager.MeterViewModel
-import com.sosnowskydevelop.metermanager.MeterViewModelFactory
+import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModel
+import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModelFactory
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.databinding.MeterListFragmentBinding
 
@@ -29,11 +29,7 @@ class MeterListFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = MeterListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }

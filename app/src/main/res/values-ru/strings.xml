@@ -3,4 +3,12 @@
     <string name="locations">Помещения</string>
     <string name="location_edit">Редактирование</string>
     <string name="location_new">Новое помещение</string>
+    <string name="add_new_location">Добавить новое помещение</string>
+    <string name="save_new_location">Сохранить новое помещение</string>
+    <string name="new_location_name_label">Название</string>
+    <string name="new_location_name_hint">Введите название помещения</string>
+    <string name="new_location_description_label">Описание</string>
+    <string name="new_location_description_hint">Введите описание</string>
+    <string name="input_location_name_empty_err">Введите название помещения</string>
+    <string name="input_location_name_duplicate_err">Помещение с таким названием уже существует</string>
 </resources>
