@@ -4,4 +4,5 @@
     <dimen name="medium_padding">8dp</dimen>
     <dimen name="main_font_size">24sp</dimen>
     <dimen name="description_font_size">16sp</dimen>
+    <dimen name="details_margin">16dp</dimen>
 </resources>
