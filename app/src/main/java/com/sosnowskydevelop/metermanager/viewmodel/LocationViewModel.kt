@@ -2,7 +2,6 @@ package com.sosnowskydevelop.metermanager.viewmodel
 
 import androidx.lifecycle.*
 import com.sosnowskydevelop.metermanager.data.Location
-import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.LocationRepository
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException

@@ -4,8 +4,6 @@ import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.sosnowskydevelop.metermanager.dao.LocationDao
 import com.sosnowskydevelop.metermanager.data.Location
-import com.sosnowskydevelop.metermanager.data.Meter
-import kotlinx.coroutines.flow.Flow
 
 class LocationRepository(private val locationDao: LocationDao) {
     val allLocations: LiveData<List<Location>> = locationDao.getAllLocations()
