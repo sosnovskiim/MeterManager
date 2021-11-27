@@ -15,6 +15,8 @@ import com.sosnowskydevelop.metermanager.*
 import com.sosnowskydevelop.metermanager.adapter.MeterListAdapter
 import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModelFactory
+import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
+import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.databinding.MeterListFragmentBinding

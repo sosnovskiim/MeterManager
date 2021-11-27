@@ -12,7 +12,7 @@ class LocationViewModel(private val locationRepository: LocationRepository) : Vi
     val allLocations: LiveData<List<Location>> = locationRepository.allLocations
 
     fun getLocationById(locationId: Int): LiveData<Location> {
-        return locationRepository.getLocationByID(locationId).asLiveData()
+        return locationRepository.getLocationByID(locationId)
     }
 
     fun insert(location: Location) = viewModelScope.launch {

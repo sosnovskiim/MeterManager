@@ -11,7 +11,7 @@ interface LocationDao {
     fun getAllLocations(): LiveData<List<Location>>
 
     @Query("SELECT * FROM location WHERE _id = :id")
-    fun getLocationByID(id: Int): Flow<Location>
+    fun getLocationByID(id: Int): LiveData<Location>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(location: Location)

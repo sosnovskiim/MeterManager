@@ -12,7 +12,7 @@ class LocationRepository(private val locationDao: LocationDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun getLocationByID(locationId: Int): Flow<Location> {
+    fun getLocationByID(locationId: Int): LiveData<Location> {
         return locationDao.getLocationByID(locationId)
     }
 
