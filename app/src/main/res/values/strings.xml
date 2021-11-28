@@ -17,6 +17,7 @@
     <string name="location_delete_dialog_negative">No</string>
     <string name="location_delete_toast">Location deleted</string>
     <string name="add_hint">Add new meter</string>
+    <string name="new_meter_name_hint">Input name</string>
     <string name="reading_units_label">Reading units</string>
     <string name="kv">KV</string>
     <string name="m3">m3</string>

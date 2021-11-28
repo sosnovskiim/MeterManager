@@ -17,6 +17,7 @@
     <string name="location_delete_dialog_negative">Нет</string>
     <string name="location_delete_toast">Помещение удалено</string>
     <string name="add_hint">Добавить новый счётчик</string>
+    <string name="new_meter_name_hint">Введите название счетчика</string>
     <string name="reading_units_label">Единицы измерения</string>
     <string name="kv">кВт</string>
     <string name="m3">м3</string>

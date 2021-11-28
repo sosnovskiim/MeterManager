@@ -17,7 +17,7 @@
             android:id="@+id/meter_name_edittext"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="@string/new_location_name_hint"
+            android:hint="@string/new_meter_name_hint"
             android:textSize="@dimen/main_font_size"
             android:textColor="@color/main_text"
             android:paddingHorizontal="@dimen/medium_padding"
