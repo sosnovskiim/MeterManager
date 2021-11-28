@@ -1,14 +1,14 @@
 package com.sosnowskydevelop.metermanager.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.sosnowskydevelop.metermanager.data.Meter
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MeterDao {
 
-    @Query("SELECT * FROM meter WHERE locationId = :locationID ORDER BY _id")
-    fun getAllMetersByLocationID(locationID: Int): Flow<List<Meter>>
+    @Query("SELECT * FROM meter WHERE locationId = :locationID ORDER BY _id DESC")
+    fun getAllMetersByLocationID(locationID: Int): LiveData<List<Meter>>
 
     @Query("SELECT * FROM meter WHERE _id = :id")
     fun getMeterByID(id: Int): Meter?

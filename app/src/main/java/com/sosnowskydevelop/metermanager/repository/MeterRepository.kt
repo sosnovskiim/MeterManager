@@ -1,15 +1,15 @@
 package com.sosnowskydevelop.metermanager.repository
 
 import androidx.annotation.WorkerThread
+import androidx.lifecycle.LiveData
 import com.sosnowskydevelop.metermanager.dao.MeterDao
 import com.sosnowskydevelop.metermanager.data.Meter
-import kotlinx.coroutines.flow.Flow
 
 class MeterRepository(private val meterDao: MeterDao) {
 
-    @Suppress("RedundantSuspendModifier")
+    //@Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun getAllMetersBuLocationID(locationId: Int): Flow<List<Meter>> {
+    fun getAllMetersByLocationID(locationId: Int): LiveData<List<Meter>> {
         return meterDao.getAllMetersByLocationID(locationId)
     }
 

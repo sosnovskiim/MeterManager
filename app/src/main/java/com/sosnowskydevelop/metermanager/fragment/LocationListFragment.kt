@@ -43,12 +43,13 @@ class LocationListFragment : Fragment() {
             locations?.let { locationAdapter.submitList(it) }
         })
 
+        // TODO remove temp button
         binding.locationDeleteBtn.setOnClickListener {
             locationViewModel.deleteAll()
         }
 
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
-        actionBar?.title = resources.getString(R.string.locations)
+        actionBar?.title = resources.getString(R.string.locations_title)
         actionBar?.setDisplayHomeAsUpEnabled(false)
 
         val args: LocationListFragmentArgs by navArgs()

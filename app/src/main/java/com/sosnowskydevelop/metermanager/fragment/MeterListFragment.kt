@@ -22,7 +22,9 @@ import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.databinding.MeterListFragmentBinding
 
 class MeterListFragment : Fragment() {
+
     private lateinit var binding: MeterListFragmentBinding
+    lateinit var location: Location
 
     // TODO Two ViewModels...
     private val locationViewModel: LocationViewModel by viewModels {
@@ -43,8 +45,6 @@ class MeterListFragment : Fragment() {
         return binding.root
     }
 
-    lateinit var location: Location
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args: MeterListFragmentArgs by navArgs()
@@ -57,14 +57,7 @@ class MeterListFragment : Fragment() {
             meter?.let { meterAdapter.submitList(it) }
         })
 
-        binding.meterAddBtn.setOnClickListener {
-            findNavController().navigate(
-                MeterListFragmentDirections.actionMeterListFragmentToMeterDetailsFragment(
-                    locationId
-                )
-            )
-        }
-
+        // TODO remove temp button
         binding.meterDeleteBtn.setOnClickListener {
             meterViewModel.deleteAllMetersByLocationId(locationId)
         }
@@ -119,6 +112,12 @@ class MeterListFragment : Fragment() {
                 )
                 dialog = builder.create()
                 dialog.show()
+                true
+            }
+            R.id.add_meter -> {
+                findNavController().navigate(
+                    MeterListFragmentDirections.actionMeterListFragmentToMeterDetailsFragment(location.id, 0)
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)

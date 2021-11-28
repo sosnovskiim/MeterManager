@@ -51,9 +51,9 @@ class LocationDetailsFragment : Fragment() {
         val args: LocationDetailsFragmentArgs by navArgs()
         val locationId = args.locationId
         if (locationId == 0) {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_new)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_new_title)
         } else {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit_title)
         }
 
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -66,7 +66,6 @@ class LocationDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.location_menu_save -> {
-                locationViewModel.isLocationNameUnique(name.text.toString())
                 if (TextUtils.isEmpty(name.text)) {
                     locationNameError(R.string.input_location_name_empty_err)
                 } else if (!locationViewModel.isLocationNameUnique(name.text.toString())) {

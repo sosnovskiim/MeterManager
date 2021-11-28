@@ -8,24 +8,51 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"/>
+            android:text="@string/name_label"
+            android:textSize="@dimen/main_font_size"
+            android:textColor="@color/main_text"
+            android:paddingHorizontal="@dimen/medium_padding"
+            android:layout_marginHorizontal="@dimen/details_margin"/>
         <EditText
             android:id="@+id/meter_name_edittext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-<!--        <TextView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Description"/>-->
-<!--        <EditText-->
-<!--            android:id="@+id/location_description_edittext"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content" />-->
-        <Button
-            android:id="@+id/meter_save_btn"
-            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:hint="@string/new_location_name_hint"
+            android:textSize="@dimen/main_font_size"
+            android:textColor="@color/main_text"
+            android:paddingHorizontal="@dimen/medium_padding"
+            android:background="@drawable/edit_text_border"
+            android:layout_marginHorizontal="@dimen/details_margin"
+            android:importantForAutofill="no"
+            android:inputType="text" />
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save"/>
-
+            android:text="@string/reading_units_label"
+            android:textSize="@dimen/main_font_size"
+            android:textColor="@color/main_text"
+            android:paddingHorizontal="@dimen/medium_padding"
+            android:layout_marginHorizontal="@dimen/details_margin"
+            android:layout_marginTop="20dp"/>
+        <RadioGroup
+            android:id="@+id/rg_reading_units"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/details_margin" >
+            <RadioButton
+                android:id="@+id/rb_kv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/kv"
+                android:textSize="@dimen/main_font_size"
+                android:textColor="@color/main_text"/>
+            <RadioButton
+                android:id="@+id/rb_m3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/m3"
+                android:textSize="@dimen/main_font_size"
+                android:textColor="@color/main_text"/>
+        </RadioGroup>
     </LinearLayout>
 </layout>
