@@ -20,4 +20,9 @@
     <string name="edit_hint">Редактировать</string>
     <string name="location_added">Помещение добавлено</string>
     <string name="location_edited">Помещение изменено</string>
+    <string name="meter_delete_dialog_title">Удаление</string>
+    <string name="meter_delete_dialog_message">Вы уверены, что хотите удалить</string>
+    <string name="meter_delete_dialog_positive">Да</string>
+    <string name="meter_delete_dialog_negative">Нет</string>
+    <string name="meter_delete_toast">Счетчик удален</string>
 </resources>
