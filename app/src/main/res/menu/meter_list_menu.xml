@@ -5,7 +5,7 @@
         android:id="@+id/add_meter"
         android:icon="@drawable/add_icon"
         android:title="@string/add_hint"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item android:id="@+id/edit_location"
         android:icon="@drawable/edit_icon"
         android:title="@string/edit_hint"

@@ -57,9 +57,9 @@ class LocationDetailsFragment : Fragment() {
         val locationId = args.locationId
         isNew = locationId == 0
         if (isNew) {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_new)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_new_title)
         } else {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit_title)
             locationViewModel.getLocationById(locationId).observe(this, {
                 location = it
                 binding.locationNameEdittext.setText(it.name)
