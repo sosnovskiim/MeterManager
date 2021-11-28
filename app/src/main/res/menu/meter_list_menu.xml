@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/edit_location"
         android:icon="@drawable/edit_icon"
-        android:title="@string/delete_hint"
+        android:title="@string/edit_hint"
         app:showAsAction="always" />
     <item android:id="@+id/delete_location"
         android:icon="@drawable/ic_action_delete"
-        android:title="@string/edit_hint"
-        app:showAsAction="ifRoom" />
+        android:title="@string/delete_hint"
+        app:showAsAction="always" />
 </menu>
