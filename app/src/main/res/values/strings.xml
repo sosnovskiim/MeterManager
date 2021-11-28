@@ -20,4 +20,9 @@
     <string name="edit_hint">Edit</string>
     <string name="location_added">Location added</string>
     <string name="location_edited">Location edited</string>
+    <string name="meter_delete_dialog_title">Delete</string>
+    <string name="meter_delete_dialog_message">Are you sure you want to delete</string>
+    <string name="meter_delete_dialog_positive">Yes</string>
+    <string name="meter_delete_dialog_negative">No</string>
+    <string name="meter_delete_toast">Meter deleted</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.sosnowskydevelop.metermanager.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.sosnowskydevelop.metermanager.data.Meter
 import kotlinx.coroutines.flow.Flow
@@ -10,8 +11,8 @@ interface MeterDao {
     @Query("SELECT * FROM meter WHERE locationId = :locationID ORDER BY _id")
     fun getAllMetersByLocationID(locationID: Int): Flow<List<Meter>>
 
-    @Query("SELECT * FROM meter WHERE _id = :id")
-    fun getMeterByID(id: Int): Meter?
+    @Query("SELECT * FROM meter WHERE _id = :meterId")
+    fun getMeterByID(meterId: Int): LiveData<Meter>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(meter: Meter)

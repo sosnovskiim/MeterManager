@@ -1,6 +1,7 @@
 package com.sosnowskydevelop.metermanager.viewmodel
 
 import androidx.lifecycle.*
+import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.MeterRepository
 import kotlinx.coroutines.launch
@@ -12,12 +13,20 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
        return meterRepository.getAllMetersBuLocationID(locationId).asLiveData()
     }
 
+    fun getMeterById(meterId: Int): LiveData<Meter> {
+        return meterRepository.getMeterByID(meterId)
+    }
+
     fun insert(meter: Meter) = viewModelScope.launch {
         meterRepository.insert(meter)
     }
 
     fun deleteAllMetersByLocationId(locationId: Int) = viewModelScope.launch {
         meterRepository.deleteAllMetersByLocationId(locationId)
+    }
+
+    fun deleteMeter(meter: Meter) = viewModelScope.launch {
+        meterRepository.deleteMeter(meter = meter)
     }
 }
 
