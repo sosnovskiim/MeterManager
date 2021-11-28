@@ -69,7 +69,7 @@ class MeterDetailsFragment : Fragment() {
         if (meterId == 0) {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.meter_new_title)
         } else {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit_title)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.meter_edit_title)
         }
 
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -98,6 +98,7 @@ class MeterDetailsFragment : Fragment() {
                         Unit.METERS3
                     }
                     meterViewModel.insert(Meter(id = 0, locationId = locationId, name = name.text.toString(), unit))
+                    Toast.makeText(activity, getString(R.string.meter_added), Toast.LENGTH_LONG).show()
                     findNavController().navigate(
                         MeterDetailsFragmentDirections.actionMeterDetailsFragmentToMeterListFragment(locationId))
                 }

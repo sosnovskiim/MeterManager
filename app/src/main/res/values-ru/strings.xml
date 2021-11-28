@@ -26,5 +26,5 @@
     <string name="input_meter_name_empty_err">Введите название счётчика</string>
     <string name="input_meter_name_duplicate_err">Счётчик с таким названием уже существует</string>
     <string name="input_meter_reading_err">Выберите единицу езмерения</string>
-
+    <string name="meter_added">Счётчик добавлен</string>
 </resources>

@@ -26,4 +26,5 @@
     <string name="input_meter_name_empty_err">Input meter name</string>
     <string name="input_meter_name_duplicate_err">Meter name must be unique</string>
     <string name="input_meter_reading_err">Select reading unit</string>
+    <string name="meter_added">Meter added</string>
 </resources>
