@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">MeterManager</string>
-    <string name="locations">Locations</string>
-    <string name="location_edit">Edit location</string>
-    <string name="location_new">New location</string>
+    <string name="locations_title">Locations</string>
+    <string name="location_edit_title">Edit location</string>
+    <string name="location_new_title">New location</string>
     <string name="add_new_location">Add new location</string>
     <string name="save_new_location">Save new location</string>
-    <string name="new_location_name_label">Name</string>
+    <string name="name_label">Name</string>
     <string name="new_location_name_hint">Input name</string>
     <string name="new_location_description_label">Description</string>
     <string name="new_location_description_hint">Input description</string>
@@ -16,6 +16,18 @@
     <string name="location_delete_dialog_positive">Yes</string>
     <string name="location_delete_dialog_negative">No</string>
     <string name="location_delete_toast">Location deleted</string>
+    <string name="add_hint">Add new meter</string>
+    <string name="new_meter_name_hint">Input name</string>
+    <string name="reading_units_label">Reading units</string>
+    <string name="kv">KV</string>
+    <string name="m3">m3</string>
+    <string name="save_new_meter">Сохранить новый счётчик</string>
+    <string name="meter_new_title">New meter</string>
+    <string name="meter_edit_title">Edit meter</string>
+    <string name="input_meter_name_empty_err">Input meter name</string>
+    <string name="input_meter_name_duplicate_err">Meter name must be unique</string>
+    <string name="input_meter_reading_err">Select reading unit</string>
+    <string name="meter_added">Meter added</string>
     <string name="delete_hint">Delete</string>
     <string name="edit_hint">Edit</string>
     <string name="location_added">Location added</string>

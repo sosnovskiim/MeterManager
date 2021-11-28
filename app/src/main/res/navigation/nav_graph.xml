@@ -62,6 +62,9 @@
         <argument
             android:name="locationId"
             app:argType="integer" />
+        <argument
+            android:name="meterId"
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/readingListFragment"

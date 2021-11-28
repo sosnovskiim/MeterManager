@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Менеджер счётчиков</string>
-    <string name="locations">Помещения</string>
-    <string name="location_edit">Редактирование</string>
-    <string name="location_new">Новое помещение</string>
+    <string name="locations_title">Помещения</string>
+    <string name="location_edit_title">Редактирование</string>
+    <string name="location_new_title">Новое помещение</string>
     <string name="add_new_location">Добавить новое помещение</string>
     <string name="save_new_location">Сохранить новое помещение</string>
-    <string name="new_location_name_label">Название</string>
+    <string name="name_label">Название</string>
     <string name="new_location_name_hint">Введите название помещения</string>
     <string name="new_location_description_label">Описание</string>
     <string name="new_location_description_hint">Введите описание</string>
@@ -16,6 +16,18 @@
     <string name="location_delete_dialog_positive">Да</string>
     <string name="location_delete_dialog_negative">Нет</string>
     <string name="location_delete_toast">Помещение удалено</string>
+    <string name="add_hint">Добавить новый счётчик</string>
+    <string name="new_meter_name_hint">Введите название счетчика</string>
+    <string name="reading_units_label">Единицы измерения</string>
+    <string name="kv">кВт</string>
+    <string name="m3">м3</string>
+    <string name="save_new_meter">Сохранить новый счётчик</string>
+    <string name="meter_new_title">Новый счётчик</string>
+    <string name="meter_edit_title">Редактирование</string>
+    <string name="input_meter_name_empty_err">Введите название счётчика</string>
+    <string name="input_meter_name_duplicate_err">Счётчик с таким названием уже существует</string>
+    <string name="input_meter_reading_err">Выберите единицу езмерения</string>
+    <string name="meter_added">Счётчик добавлен</string>
     <string name="delete_hint">Удалить</string>
     <string name="edit_hint">Редактировать</string>
     <string name="location_added">Помещение добавлено</string>
