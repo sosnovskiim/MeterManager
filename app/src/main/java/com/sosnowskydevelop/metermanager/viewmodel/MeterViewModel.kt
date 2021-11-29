@@ -1,16 +1,19 @@
 package com.sosnowskydevelop.metermanager.viewmodel
 
 import androidx.lifecycle.*
-import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.MeterRepository
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel() {
 
-    fun getAllMetersByLocationId(locationId: Int): LiveData<List<Meter>> {
-       return meterRepository.getAllMetersByLocationID(locationId)
+    @DelicateCoroutinesApi
+    @ExperimentalCoroutinesApi
+    fun getAllMetersByLocationId(locationId: Int): List<Meter> {
+        return meterRepository.getAllMetersByLocationID(locationId)
     }
 
     fun getMeterById(meterId: Int): LiveData<Meter> {

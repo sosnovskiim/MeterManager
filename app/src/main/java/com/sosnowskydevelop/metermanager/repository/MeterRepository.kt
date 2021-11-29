@@ -3,15 +3,27 @@ package com.sosnowskydevelop.metermanager.repository
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.sosnowskydevelop.metermanager.dao.MeterDao
-import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 
 class MeterRepository(private val meterDao: MeterDao) {
 
-    //@Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    fun getAllMetersByLocationID(locationId: Int): LiveData<List<Meter>> {
-        return meterDao.getAllMetersByLocationID(locationId)
+    @DelicateCoroutinesApi
+    @ExperimentalCoroutinesApi
+    fun getAllMetersByLocationID(locationId: Int): List<Meter> {
+        val getDataJob =
+            GlobalScope.async { meterDao.getAllMetersByLocationID(locationID = locationId) }
+
+        var result: List<Meter> = listOf()
+        getDataJob.invokeOnCompletion { cause ->
+            if (cause == null) {
+                result = getDataJob.getCompleted()
+            }
+        }
+        return result
     }
 
     @Suppress("RedundantSuspendModifier")

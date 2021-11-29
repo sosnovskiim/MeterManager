@@ -8,7 +8,7 @@ import com.sosnowskydevelop.metermanager.data.Meter
 interface MeterDao {
 
     @Query("SELECT * FROM meter WHERE locationId = :locationID ORDER BY _id DESC")
-    fun getAllMetersByLocationID(locationID: Int): LiveData<List<Meter>>
+    suspend fun getAllMetersByLocationID(locationID: Int): List<Meter>
 
     @Query("SELECT * FROM meter WHERE _id = :meterId")
     fun getMeterByID(meterId: Int): LiveData<Meter>

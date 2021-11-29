@@ -21,6 +21,8 @@ import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.databinding.MeterListFragmentBinding
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class MeterListFragment : Fragment() {
 
@@ -54,9 +56,7 @@ class MeterListFragment : Fragment() {
         val meterAdapter = MeterListAdapter()
         binding.meterRecyclerview.adapter = meterAdapter
 
-        meterViewModel.getAllMetersByLocationId(locationId).observe(this, Observer { meter ->
-            meter?.let { meterAdapter.submitList(it) }
-        })
+        meterAdapter.submitList(meterViewModel.getAllMetersByLocationId(locationId))
 
         // TODO remove temp button
         binding.meterDeleteBtn.setOnClickListener {

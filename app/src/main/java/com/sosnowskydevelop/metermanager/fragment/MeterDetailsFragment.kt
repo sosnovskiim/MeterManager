@@ -22,6 +22,8 @@ import com.sosnowskydevelop.metermanager.Unit
 import com.sosnowskydevelop.metermanager.databinding.MeterDetailsFragmentBinding
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 class MeterDetailsFragment : Fragment() {
 
@@ -31,10 +33,6 @@ class MeterDetailsFragment : Fragment() {
 
     private val meterViewModel: MeterViewModel by viewModels {
         MeterViewModelFactory((activity?.application as MetersApplication).meterRepository)
-    }
-
-    private val locationViewModel: LocationViewModel by viewModels {
-        LocationViewModelFactory((activity?.application as MetersApplication).locationRepository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -115,13 +113,14 @@ class MeterDetailsFragment : Fragment() {
     }
 
     // TODO not work!!!
+    @DelicateCoroutinesApi
+    @ExperimentalCoroutinesApi
     private fun isMeterNameUnique(locationId: Int, name: String): Boolean {
-        var result = true
-        locationViewModel.getLocationById(locationId).observe(requireActivity(), Observer { it ->
-            if (it.name == "12345") { // TODO при удалении помещения по какой-то причине компилятор приходит сюда и падает, потому что it == null, очевидно.
-                result = false
+        meterViewModel.getAllMetersByLocationId(locationId = locationId).forEach { meter: Meter ->
+            if (meter.name == name) {
+                return false
             }
-        })
-        return result
+        }
+        return true
     }
 }
