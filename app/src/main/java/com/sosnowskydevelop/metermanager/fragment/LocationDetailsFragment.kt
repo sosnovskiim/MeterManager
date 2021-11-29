@@ -95,7 +95,7 @@ class LocationDetailsFragment : Fragment() {
                             locationNameError(R.string.input_location_name_duplicate_err)
                         } else {
                             if (location.name != editTextName.text.toString()) {
-                                location.name != editTextName.text.toString()
+                                location.name = editTextName.text.toString()
                                 isChanged = true
                             }
                             if (location.description != description) {
