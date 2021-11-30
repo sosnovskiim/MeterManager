@@ -116,12 +116,6 @@ class MeterDetailsFragment : Fragment() {
 
     // TODO not work!!!
     private fun isMeterNameUnique(locationId: Int, name: String): Boolean {
-        var result = true
-        locationViewModel.getLocationById(locationId).observe(requireActivity(), Observer { it ->
-            if (it.name == "12345") { // TODO при удалении помещения по какой-то причине компилятор приходит сюда и падает, потому что it == null, очевидно.
-                result = false
-            }
-        })
-        return result
+        return true
     }
 }

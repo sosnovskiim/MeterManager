@@ -37,4 +37,5 @@
     <string name="meter_delete_dialog_positive">Да</string>
     <string name="meter_delete_dialog_negative">Нет</string>
     <string name="meter_delete_toast">Счетчик удален</string>
+    <string name="last_reading">Последнее показание:</string>
 </resources>
