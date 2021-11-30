@@ -19,8 +19,8 @@ data class Meter(
     @ColumnInfo(name = "_id")
     val id: Int,
     val locationId: Int,
-    val name: String,
-    val unit: Unit
+    var name: String,
+    var unit: Unit
 ) {
 
 }

@@ -28,6 +28,12 @@ class MeterRepository(private val meterDao: MeterDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    suspend fun update(meter: Meter) {
+        meterDao.update(meter)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun deleteAllMetersByLocationId(locationId: Int) {
         meterDao.deleteAllMetersByLocationID(locationId)
     }

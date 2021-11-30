@@ -82,5 +82,8 @@
         <argument
             android:name="meterId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_readingListFragment_to_meterDetailsFragment"
+            app:destination="@id/meterDetailsFragment" />
     </fragment>
 </navigation>

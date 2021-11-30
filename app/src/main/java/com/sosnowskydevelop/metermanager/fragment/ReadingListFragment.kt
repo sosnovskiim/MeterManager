@@ -20,6 +20,8 @@ import java.util.*
 
 class ReadingListFragment : Fragment() {
     private lateinit var binding: ReadingListFragmentBinding
+    private var locationId: Int = 0
+    private lateinit var meter: Meter
 
     private val meterViewModel: MeterViewModel by viewModels {
         MeterViewModelFactory((activity?.application as MetersApplication).meterRepository)
@@ -38,9 +40,6 @@ class ReadingListFragment : Fragment() {
         binding = ReadingListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
-
-    var locationId: Int = 0
-    lateinit var meter: Meter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -100,6 +99,10 @@ class ReadingListFragment : Fragment() {
                 )
                 dialog = builder.create()
                 dialog.show()
+                true
+            }
+            R.id.edit_meter -> {
+                findNavController().navigate(ReadingListFragmentDirections.actionReadingListFragmentToMeterDetailsFragment(locationId, meter.id))
                 true
             }
             else -> super.onOptionsItemSelected(item)

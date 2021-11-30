@@ -21,6 +21,10 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
         meterRepository.insert(meter)
     }
 
+    fun update(meter: Meter) = viewModelScope.launch {
+        meterRepository.update(meter)
+    }
+
     fun deleteAllMetersByLocationId(locationId: Int) = viewModelScope.launch {
         meterRepository.deleteAllMetersByLocationId(locationId)
     }
