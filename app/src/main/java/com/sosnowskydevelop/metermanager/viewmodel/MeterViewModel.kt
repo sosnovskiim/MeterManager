@@ -4,10 +4,14 @@ import androidx.lifecycle.*
 import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.MeterRepository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.lang.IllegalArgumentException
 
 class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel() {
+
+    var isMeterUnique = true
 
     fun getAllMetersByLocationId(locationId: Int): LiveData<List<Meter>> {
        return meterRepository.getAllMetersByLocationID(locationId)
@@ -29,14 +33,27 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
         meterRepository.deleteMeter(meter = meter)
     }
 
-//    fun isMeterNameUnique(locationId: Int, name: String): Boolean {
-//        getAllMetersByLocationId(locationId).observe() value?.forEach {
-//           if (it.name == name) {
-//               return false
-//           }
+    fun isMeterUnique(name: String, locationId: Int) {
+//        val some = viewModelScope.launch {
+//            meterRepository.isMeterUnique(name, locationId)
 //        }
-//        return true
-//    }
+        val some = GlobalScope.async { meterRepository.isMeterUnique(name, locationId) }
+        some.invokeOnCompletion { cause ->
+            if (cause != null) {
+                // error!  Handle that here
+                Unit
+            } else {
+//                val result = some
+                val compl = some.getCompleted()
+                val str = compl.toString()
+                val i = str.toInt()
+//                if (result == 1) {
+//                    isMeterUnique = false
+//                }
+                Unit
+            }
+        }
+    }
 }
 
 class MeterViewModelFactory(private val repository: MeterRepository) : ViewModelProvider.Factory {

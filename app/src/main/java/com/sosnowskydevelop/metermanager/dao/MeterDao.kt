@@ -24,4 +24,7 @@ interface MeterDao {
 
     @Query("DELETE FROM meter WHERE locationId = :locationID")
     suspend fun deleteAllMetersByLocationID(locationID: Int)
+
+    @Query("SELECT 1 FROM meter WHERE name = :name AND locationId = :locationID")
+    suspend fun isMeterUnique(name: String, locationID: Int): Int
 }

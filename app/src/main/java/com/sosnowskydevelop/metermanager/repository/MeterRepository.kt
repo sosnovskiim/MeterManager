@@ -37,4 +37,10 @@ class MeterRepository(private val meterDao: MeterDao) {
     suspend fun deleteMeter(meter: Meter) {
         meterDao.delete(meter = meter)
     }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    suspend fun isMeterUnique(name: String, locationId: Int) {
+        meterDao.isMeterUnique(name = name, locationID = locationId)
+    }
 }
