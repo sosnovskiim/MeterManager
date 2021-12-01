@@ -22,6 +22,7 @@ import com.sosnowskydevelop.metermanager.Unit
 import com.sosnowskydevelop.metermanager.databinding.MeterDetailsFragmentBinding
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
+import kotlinx.coroutines.DelicateCoroutinesApi
 
 class MeterDetailsFragment : Fragment() {
 
@@ -85,7 +86,7 @@ class MeterDetailsFragment : Fragment() {
             R.id.meter_menu_save -> {
                 if (TextUtils.isEmpty(name.text)) {
                     meterNameError(R.string.input_meter_name_empty_err)
-                } else if (!isMeterNameUnique(locationId, name.text.toString())) {
+                } else if (!meterViewModel.isMeterUnique(name = name.text.toString(), locationId = locationId)) {
                     meterNameError(R.string.input_meter_name_duplicate_err)
                 } else if (!binding.rbKv.isChecked && !binding.rbM3.isChecked) {
                     Toast.makeText(activity, getString(R.string.input_meter_reading_err), Toast.LENGTH_LONG).show()
@@ -112,11 +113,5 @@ class MeterDetailsFragment : Fragment() {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
         name.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
         name.requestFocus()
-    }
-
-    // TODO not work!!!
-    private fun isMeterNameUnique(locationId: Int, name: String): Boolean {
-        meterViewModel.isMeterUnique(locationId = locationId, name = name)
-        return meterViewModel.isMeterUnique
     }
 }

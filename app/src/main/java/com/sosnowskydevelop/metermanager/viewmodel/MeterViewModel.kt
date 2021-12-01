@@ -1,12 +1,10 @@
 package com.sosnowskydevelop.metermanager.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.*
-import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.MeterRepository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.lang.IllegalArgumentException
 
 class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel() {
@@ -14,7 +12,7 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
     var isMeterUnique = true
 
     fun getAllMetersByLocationId(locationId: Int): LiveData<List<Meter>> {
-       return meterRepository.getAllMetersByLocationID(locationId)
+        return meterRepository.getAllMetersByLocationID(locationId)
     }
 
     fun getMeterById(meterId: Int): LiveData<Meter> {
@@ -33,27 +31,38 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
         meterRepository.deleteMeter(meter = meter)
     }
 
-    fun isMeterUnique(name: String, locationId: Int) {
+    fun isMeterUnique(name: String, locationId: Int): Boolean {
+        var result = true
+        viewModelScope.launch {
+            suspend {
+                withContext(Dispatchers.Main) {
+                    result = meterRepository.isMeterUnique(name = name, locationId = locationId)
+                }
+            }.invoke()
+        }
+        return result
+    }
+//        meterRepository.isMeterUnique(name = name, locationId = locationId)
+
 //        val some = viewModelScope.launch {
 //            meterRepository.isMeterUnique(name, locationId)
 //        }
-        val some = GlobalScope.async { meterRepository.isMeterUnique(name, locationId) }
-        some.invokeOnCompletion { cause ->
-            if (cause != null) {
-                // error!  Handle that here
-                Unit
-            } else {
-//                val result = some
-                val compl = some.getCompleted()
-                val str = compl.toString()
-                val i = str.toInt()
-//                if (result == 1) {
-//                    isMeterUnique = false
-//                }
-                Unit
-            }
-        }
-    }
+//        val some = GlobalScope.async { meterRepository.isMeterUnique(name, locationId) }
+//        some.invokeOnCompletion { cause ->
+//            if (cause != null) {
+//                // error!  Handle that here
+//                Unit
+//            } else {
+////                val result = some
+//                val compl = some.getCompleted()
+//                val str = compl.toString()
+//                val i = str.toInt()
+////                if (result == 1) {
+////                    isMeterUnique = false
+////                }
+//                Unit
+//            }
+//        }
 }
 
 class MeterViewModelFactory(private val repository: MeterRepository) : ViewModelProvider.Factory {

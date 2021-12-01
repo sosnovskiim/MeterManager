@@ -1,9 +1,9 @@
 package com.sosnowskydevelop.metermanager.repository
 
+import android.util.Log
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.sosnowskydevelop.metermanager.dao.MeterDao
-import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 
 class MeterRepository(private val meterDao: MeterDao) {
@@ -38,9 +38,12 @@ class MeterRepository(private val meterDao: MeterDao) {
         meterDao.delete(meter = meter)
     }
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
-    suspend fun isMeterUnique(name: String, locationId: Int) {
-        meterDao.isMeterUnique(name = name, locationID = locationId)
+//    @Suppress("RedundantSuspendModifier")
+//    @WorkerThread
+    suspend fun isMeterUnique(name: String, locationId: Int): Boolean {
+        val temp = meterDao.isMeterUnique(name = name, locationID = locationId) != "1"
+        Log.i("metermanager", temp.toString())
+        return temp
+//        return false
     }
 }
