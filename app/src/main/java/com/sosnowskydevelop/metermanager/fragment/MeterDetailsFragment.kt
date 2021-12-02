@@ -22,7 +22,6 @@ import com.sosnowskydevelop.metermanager.Unit
 import com.sosnowskydevelop.metermanager.databinding.MeterDetailsFragmentBinding
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
-import kotlinx.coroutines.DelicateCoroutinesApi
 
 class MeterDetailsFragment : Fragment() {
 
@@ -84,25 +83,54 @@ class MeterDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.meter_menu_save -> {
-                if (TextUtils.isEmpty(name.text)) {
+                val isMeterNameEmpty: Boolean =
+                    TextUtils.isEmpty(name.text)
+                val isReadingUnitsUnchecked: Boolean =
+                    !binding.rbKv.isChecked && !binding.rbM3.isChecked
+
+                if (isMeterNameEmpty) {
                     meterNameError(R.string.input_meter_name_empty_err)
-                } else if (!meterViewModel.isMeterUnique(name = name.text.toString(), locationId = locationId)) {
-                    meterNameError(R.string.input_meter_name_duplicate_err)
-                } else if (!binding.rbKv.isChecked && !binding.rbM3.isChecked) {
+                } else if (isReadingUnitsUnchecked) {
                     Toast.makeText(activity, getString(R.string.input_meter_reading_err), Toast.LENGTH_LONG).show()
                     binding.rgReadingUnits.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
                 }
-                else {
-                    val unit = if (binding.rbKv.isChecked) {
-                        Unit.KILOVAT
-                    } else {
-                        Unit.METERS3
+
+                meterViewModel.isMeterDuplicate(
+                    name = name.text.toString(),
+                    locationId = locationId
+                ).observe(this, Observer { isMeterDuplicate ->
+                    if (!isMeterNameEmpty && !isReadingUnitsUnchecked) {
+                        if (isMeterDuplicate == "1") {
+                            meterNameError(R.string.input_meter_name_duplicate_err)
+                        } else {
+                            val unit = if (binding.rbKv.isChecked) {
+                                Unit.KILOVAT
+                            } else {
+                                Unit.METERS3
+                            }
+
+                            meterViewModel.insert(
+                                Meter(
+                                    id = 0,
+                                    locationId = locationId,
+                                    name = name.text.toString(),
+                                    unit = unit
+                                )
+                            )
+
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.meter_added),
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            findNavController().navigate(
+                                MeterDetailsFragmentDirections
+                                    .actionMeterDetailsFragmentToMeterListFragment(locationId)
+                            )
+                        }
                     }
-                    meterViewModel.insert(Meter(id = 0, locationId = locationId, name = name.text.toString(), unit))
-                    Toast.makeText(activity, getString(R.string.meter_added), Toast.LENGTH_LONG).show()
-                    findNavController().navigate(
-                        MeterDetailsFragmentDirections.actionMeterDetailsFragmentToMeterListFragment(locationId))
-                }
+                })
                 true
             }
             else -> super.onOptionsItemSelected(item)

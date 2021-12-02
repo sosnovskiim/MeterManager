@@ -1,6 +1,5 @@
 package com.sosnowskydevelop.metermanager.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.MeterRepository
@@ -8,9 +7,6 @@ import kotlinx.coroutines.*
 import java.lang.IllegalArgumentException
 
 class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel() {
-
-    var isMeterUnique = true
-
     fun getAllMetersByLocationId(locationId: Int): LiveData<List<Meter>> {
         return meterRepository.getAllMetersByLocationID(locationId)
     }
@@ -31,16 +27,17 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
         meterRepository.deleteMeter(meter = meter)
     }
 
-    fun isMeterUnique(name: String, locationId: Int): Boolean {
-        var result = true
-        viewModelScope.launch {
-            suspend {
-                withContext(Dispatchers.Main) {
-                    result = meterRepository.isMeterUnique(name = name, locationId = locationId)
-                }
-            }.invoke()
-        }
-        return result
+    fun isMeterDuplicate(name: String, locationId: Int): LiveData<String> {
+        return meterRepository.isMeterDuplicate(name = name, locationId = locationId)
+//        var result = true
+//        viewModelScope.launch {
+//            suspend {
+//                withContext(Dispatchers.Main) {
+//                    result = meterRepository.isMeterUnique(name = name, locationId = locationId)
+//                }
+//            }.invoke()
+//        }
+//        return result
     }
 //        meterRepository.isMeterUnique(name = name, locationId = locationId)
 
