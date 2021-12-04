@@ -112,8 +112,9 @@ class MeterDetailsFragment : Fragment() {
                             binding.rgReadingUnits.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
                         } else {
                             meterViewModel.isMeterDuplicate(
+                                meterId = 0,
+                                locationId = locationId,
                                 name = name.text.toString(),
-                                locationId = locationId
                             ).observe(this, Observer { isMeterDuplicate ->
                                 if (isMeterDuplicate == "1") {
                                     meterNameError(R.string.input_meter_name_duplicate_err)
@@ -127,16 +128,7 @@ class MeterDetailsFragment : Fragment() {
                                         )
                                     )
 
-                                    Toast.makeText(
-                                        activity,
-                                        getString(R.string.meter_added),
-                                        Toast.LENGTH_LONG
-                                    ).show()
-
-                                    findNavController().navigate(
-                                        MeterDetailsFragmentDirections
-                                            .actionMeterDetailsFragmentToMeterListFragment(locationId)
-                                    )
+                                    closeOk(messageId = R.string.meter_added)
                                 }
                             })
                         }
@@ -152,17 +144,20 @@ class MeterDetailsFragment : Fragment() {
 
                         if (isChanged) {
                             meterViewModel.isMeterDuplicate(
+                                meterId = meter.id,
+                                locationId = locationId,
                                 name = name.text.toString(),
-                                locationId = locationId
                             ).observe(this, Observer { isMeterDuplicate ->
                                 if (isMeterDuplicate == "1") {
                                     meterNameError(R.string.input_meter_name_duplicate_err)
                                 } else {
                                     meterViewModel.update(meter)
 
-                                    closeOk(R.string.meter_edited)
+                                    closeOk(messageId = R.string.meter_edited)
                                 }
                             })
+                        } else {
+                            closeOk(messageId = null)
                         }
                     }
                 }
@@ -178,9 +173,18 @@ class MeterDetailsFragment : Fragment() {
         name.requestFocus()
     }
 
-    private fun closeOk(messageId: Int) {
-        if (isChanged) {Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()}
+    private fun closeOk(messageId: Int?) {
+        if (messageId != null) {
+            Toast.makeText(
+                activity,
+                getString(messageId),
+                Toast.LENGTH_LONG,
+            ).show()
+        }
+
         findNavController().navigate(
-            MeterDetailsFragmentDirections.actionMeterDetailsFragmentToMeterListFragment(locationId))
+            MeterDetailsFragmentDirections
+                .actionMeterDetailsFragmentToMeterListFragment(locationId)
+        )
     }
 }

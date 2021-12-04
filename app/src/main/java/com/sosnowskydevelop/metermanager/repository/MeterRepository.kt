@@ -45,7 +45,15 @@ class MeterRepository(private val meterDao: MeterDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun isMeterDuplicate(name: String, locationId: Int): LiveData<String> {
-        return meterDao.isMeterDuplicate(name = name, locationID = locationId)
+    fun isMeterDuplicate(
+        meterId: Int,
+        locationId: Int,
+        name: String,
+    ): LiveData<String> {
+        return meterDao.isMeterDuplicate(
+            meterId = meterId,
+            locationID = locationId,
+            name = name,
+        )
     }
 }

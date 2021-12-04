@@ -31,8 +31,16 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
         meterRepository.deleteMeter(meter = meter)
     }
 
-    fun isMeterDuplicate(name: String, locationId: Int): LiveData<String> {
-        return meterRepository.isMeterDuplicate(name = name, locationId = locationId)
+    fun isMeterDuplicate(
+        meterId: Int,
+        locationId: Int,
+        name: String,
+    ): LiveData<String> {
+        return meterRepository.isMeterDuplicate(
+            meterId = meterId,
+            locationId = locationId,
+            name = name,
+        )
     }
 }
 
