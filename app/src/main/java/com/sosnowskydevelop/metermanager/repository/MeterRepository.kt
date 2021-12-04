@@ -3,7 +3,6 @@ package com.sosnowskydevelop.metermanager.repository
 import androidx.annotation.WorkerThread
 import androidx.lifecycle.LiveData
 import com.sosnowskydevelop.metermanager.dao.MeterDao
-import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 
 class MeterRepository(private val meterDao: MeterDao) {
@@ -42,5 +41,11 @@ class MeterRepository(private val meterDao: MeterDao) {
     @WorkerThread
     suspend fun deleteMeter(meter: Meter) {
         meterDao.delete(meter = meter)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
+    fun isMeterDuplicate(name: String, locationId: Int): LiveData<String> {
+        return meterDao.isMeterDuplicate(name = name, locationID = locationId)
     }
 }

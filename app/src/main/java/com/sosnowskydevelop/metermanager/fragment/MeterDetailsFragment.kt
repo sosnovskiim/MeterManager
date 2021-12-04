@@ -105,28 +105,64 @@ class MeterDetailsFragment : Fragment() {
                     } else {
                         Unit.METERS3
                     }
+
                     if (isNew) {
-                        if (!isMeterNameUnique(0, name.text.toString())) {
-                            meterNameError(R.string.input_meter_name_duplicate_err)
+                        if (!binding.rbKv.isChecked && !binding.rbM3.isChecked) {
+                            Toast.makeText(activity, getString(R.string.input_meter_reading_err), Toast.LENGTH_LONG).show()
+                            binding.rgReadingUnits.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
                         } else {
-                            meterViewModel.insert(Meter(id = 0, locationId = locationId, name = name.text.toString(), unit))
-                            isChanged = true
-                            closeOk(R.string.location_added)
+                            meterViewModel.isMeterDuplicate(
+                                name = name.text.toString(),
+                                locationId = locationId
+                            ).observe(this, Observer { isMeterDuplicate ->
+                                if (isMeterDuplicate == "1") {
+                                    meterNameError(R.string.input_meter_name_duplicate_err)
+                                } else {
+                                    meterViewModel.insert(
+                                        Meter(
+                                            id = 0,
+                                            locationId = locationId,
+                                            name = name.text.toString(),
+                                            unit = unit
+                                        )
+                                    )
+
+                                    Toast.makeText(
+                                        activity,
+                                        getString(R.string.meter_added),
+                                        Toast.LENGTH_LONG
+                                    ).show()
+
+                                    findNavController().navigate(
+                                        MeterDetailsFragmentDirections
+                                            .actionMeterDetailsFragmentToMeterListFragment(locationId)
+                                    )
+                                }
+                            })
                         }
                     } else {
-                        if (!isMeterNameUnique(locationId, name.text.toString())) {
-                            meterNameError(R.string.input_meter_name_duplicate_err)
-                        } else {
-                            if (meter.name != name.text.toString()) {
-                                meter.name = name.text.toString()
-                                isChanged = true
-                            }
-                            if (meter.unit != unit) {
-                                meter.unit = unit
-                                isChanged = true
-                            }
-                            meterViewModel.update(meter)
-                            closeOk(R.string.meter_edited)
+                        if (meter.name != name.text.toString()) {
+                            meter.name = name.text.toString()
+                            isChanged = true
+                        }
+                        if (meter.unit != unit) {
+                            meter.unit = unit
+                            isChanged = true
+                        }
+
+                        if (isChanged) {
+                            meterViewModel.isMeterDuplicate(
+                                name = name.text.toString(),
+                                locationId = locationId
+                            ).observe(this, Observer { isMeterDuplicate ->
+                                if (isMeterDuplicate == "1") {
+                                    meterNameError(R.string.input_meter_name_duplicate_err)
+                                } else {
+                                    meterViewModel.update(meter)
+
+                                    closeOk(R.string.meter_edited)
+                                }
+                            })
                         }
                     }
                 }
@@ -140,11 +176,6 @@ class MeterDetailsFragment : Fragment() {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
         name.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
         name.requestFocus()
-    }
-
-    // TODO not work!!!
-    private fun isMeterNameUnique(locationId: Int, name: String): Boolean {
-        return true
     }
 
     private fun closeOk(messageId: Int) {
