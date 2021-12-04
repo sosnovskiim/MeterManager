@@ -1,7 +1,6 @@
 package com.sosnowskydevelop.metermanager.viewmodel
 
 import androidx.lifecycle.*
-import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.MeterRepository
 import kotlinx.coroutines.launch
@@ -33,14 +32,6 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
         meterRepository.deleteMeter(meter = meter)
     }
 
-//    fun isMeterNameUnique(locationId: Int, name: String): Boolean {
-//        getAllMetersByLocationId(locationId).observe() value?.forEach {
-//           if (it.name == name) {
-//               return false
-//           }
-//        }
-//        return true
-//    }
 }
 
 class MeterViewModelFactory(private val repository: MeterRepository) : ViewModelProvider.Factory {

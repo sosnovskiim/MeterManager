@@ -1,11 +1,14 @@
 package com.sosnowskydevelop.metermanager.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.sosnowskydevelop.metermanager.data.DateConverter
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.databinding.MeterListItemBinding
 import com.sosnowskydevelop.metermanager.fragment.MeterListFragmentDirections
@@ -17,6 +20,7 @@ class MeterListAdapter : ListAdapter<Meter, MeterListAdapter.MeterViewHolder>(Me
         return MeterViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
     override fun onBindViewHolder(holder: MeterViewHolder, position: Int) {
         val currentMeter = getItem(position)
         holder.itemView.setOnClickListener {
@@ -29,6 +33,7 @@ class MeterListAdapter : ListAdapter<Meter, MeterListAdapter.MeterViewHolder>(Me
             )
         }
         holder.binding.meterName.text = currentMeter.name
+        holder.binding.tvLastReadingInMeterItem.text = DateConverter.dateToString(currentMeter.getLastReadingDate())
     }
 
     class MeterViewHolder(val binding: MeterListItemBinding) : RecyclerView.ViewHolder(binding.root)

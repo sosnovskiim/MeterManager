@@ -54,8 +54,8 @@ class MeterListFragment : Fragment() {
         val meterAdapter = MeterListAdapter()
         binding.meterRecyclerview.adapter = meterAdapter
 
-        meterViewModel.getAllMetersByLocationId(locationId).observe(this, Observer { meter ->
-            meter?.let { meterAdapter.submitList(it) }
+        meterViewModel.getAllMetersByLocationId(locationId).observe(this, Observer {
+            it?.let { meterAdapter.submitList(it) }
         })
 
         // TODO remove temp button
