@@ -29,37 +29,7 @@ class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel()
 
     fun isMeterDuplicate(name: String, locationId: Int): LiveData<String> {
         return meterRepository.isMeterDuplicate(name = name, locationId = locationId)
-//        var result = true
-//        viewModelScope.launch {
-//            suspend {
-//                withContext(Dispatchers.Main) {
-//                    result = meterRepository.isMeterUnique(name = name, locationId = locationId)
-//                }
-//            }.invoke()
-//        }
-//        return result
     }
-//        meterRepository.isMeterUnique(name = name, locationId = locationId)
-
-//        val some = viewModelScope.launch {
-//            meterRepository.isMeterUnique(name, locationId)
-//        }
-//        val some = GlobalScope.async { meterRepository.isMeterUnique(name, locationId) }
-//        some.invokeOnCompletion { cause ->
-//            if (cause != null) {
-//                // error!  Handle that here
-//                Unit
-//            } else {
-////                val result = some
-//                val compl = some.getCompleted()
-//                val str = compl.toString()
-//                val i = str.toInt()
-////                if (result == 1) {
-////                    isMeterUnique = false
-////                }
-//                Unit
-//            }
-//        }
 }
 
 class MeterViewModelFactory(private val repository: MeterRepository) : ViewModelProvider.Factory {

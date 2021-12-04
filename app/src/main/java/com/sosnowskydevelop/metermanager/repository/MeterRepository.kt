@@ -41,9 +41,5 @@ class MeterRepository(private val meterDao: MeterDao) {
     @WorkerThread
     fun isMeterDuplicate(name: String, locationId: Int): LiveData<String> {
         return meterDao.isMeterDuplicate(name = name, locationID = locationId)
-//        val temp = meterDao.isMeterUnique(name = name, locationID = locationId) != "1"
-//        Log.i("metermanager", temp.toString())
-//        return temp
-////        return false
     }
 }

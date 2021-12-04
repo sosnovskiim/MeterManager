@@ -83,23 +83,16 @@ class MeterDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.meter_menu_save -> {
-                val isMeterNameEmpty: Boolean =
-                    TextUtils.isEmpty(name.text)
-                val isReadingUnitsUnchecked: Boolean =
-                    !binding.rbKv.isChecked && !binding.rbM3.isChecked
-
-                if (isMeterNameEmpty) {
+                if (TextUtils.isEmpty(name.text)) {
                     meterNameError(R.string.input_meter_name_empty_err)
-                } else if (isReadingUnitsUnchecked) {
+                } else if (!binding.rbKv.isChecked && !binding.rbM3.isChecked) {
                     Toast.makeText(activity, getString(R.string.input_meter_reading_err), Toast.LENGTH_LONG).show()
                     binding.rgReadingUnits.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
-                }
-
-                meterViewModel.isMeterDuplicate(
-                    name = name.text.toString(),
-                    locationId = locationId
-                ).observe(this, Observer { isMeterDuplicate ->
-                    if (!isMeterNameEmpty && !isReadingUnitsUnchecked) {
+                } else {
+                    meterViewModel.isMeterDuplicate(
+                        name = name.text.toString(),
+                        locationId = locationId
+                    ).observe(this, Observer { isMeterDuplicate ->
                         if (isMeterDuplicate == "1") {
                             meterNameError(R.string.input_meter_name_duplicate_err)
                         } else {
@@ -129,8 +122,8 @@ class MeterDetailsFragment : Fragment() {
                                     .actionMeterDetailsFragmentToMeterListFragment(locationId)
                             )
                         }
-                    }
-                })
+                    })
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
