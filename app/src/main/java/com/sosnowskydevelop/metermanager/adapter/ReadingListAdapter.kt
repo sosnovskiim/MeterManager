@@ -14,9 +14,10 @@ import com.sosnowskydevelop.metermanager.databinding.ReadingListItemBinding
 import com.sosnowskydevelop.metermanager.fragment.ReadingListFragmentDirections
 
 class ReadingListAdapter : ListAdapter<Reading, ReadingListAdapter.ReadingViewHolder>(ReadingListAdapter) {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReadingViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = ReadingListItemBinding.inflate(layoutInflater)
+        val binding = ReadingListItemBinding.inflate(layoutInflater, parent, false)
         return ReadingViewHolder(binding)
     }
 

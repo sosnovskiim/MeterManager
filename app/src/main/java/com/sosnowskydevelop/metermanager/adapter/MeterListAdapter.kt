@@ -16,7 +16,7 @@ import com.sosnowskydevelop.metermanager.fragment.MeterListFragmentDirections
 class MeterListAdapter : ListAdapter<Meter, MeterListAdapter.MeterViewHolder>(MeterListAdapter) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MeterViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val binding = MeterListItemBinding.inflate(layoutInflater)
+        val binding = MeterListItemBinding.inflate(layoutInflater, parent, false)
         return MeterViewHolder(binding)
     }
 
