@@ -28,12 +28,12 @@ class MeterListAdapter : ListAdapter<Meter, MeterListAdapter.MeterViewHolder>(Me
                 MeterListFragmentDirections
                     .actionMeterListFragmentToReadingListFragment(
                         locationId = currentMeter.locationId,
-                        meterId = currentMeter.id
+                        meter = currentMeter
                     )
             )
         }
         holder.binding.meterName.text = currentMeter.name
-        holder.binding.tvLastReadingInMeterItem.text = DateConverter.dateToString(currentMeter.getLastReadingDate())
+        holder.binding.tvLastReadingInMeterItem.text = DateConverter.dateToString(currentMeter.lastReadingDate)
     }
 
     class MeterViewHolder(val binding: MeterListItemBinding) : RecyclerView.ViewHolder(binding.root)

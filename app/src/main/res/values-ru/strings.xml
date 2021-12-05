@@ -50,6 +50,9 @@
     <string name="reading_new_title">Новое показание</string>
     <string name="reading_edit_title">Редактирование</string>
     <string name="save_new_reading">Сохранить показание</string>
-    <string name="reading_value_empty">Введите показание</string>
+    <string name="reading_value_empty">Значение показания должно быть числом</string>
     <string name="reading_future_date">Дата не может быть из будущего</string>
+    <string name="last_reading_less_then_new_err">New value can\'t be less than last value</string>
+    <string name="reading_edited">Показание изменено</string>
+    <string name="reading_added">Показание добавлено</string>
 </resources>

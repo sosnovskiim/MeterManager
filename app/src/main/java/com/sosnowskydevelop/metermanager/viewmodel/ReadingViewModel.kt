@@ -35,6 +35,9 @@ class ReadingViewModel(private val readingRepository: ReadingRepository) : ViewM
         readingRepository.delete(reading = reading)
     }
 
+    fun addLastReading(reading: Reading) = viewModelScope.launch {
+        readingRepository.addLastReading(meterId = reading.meterId, date = reading.date, value = reading.value)
+    }
 }
 
 class ReadingViewModelFactory(private val repository: ReadingRepository) : ViewModelProvider.Factory {

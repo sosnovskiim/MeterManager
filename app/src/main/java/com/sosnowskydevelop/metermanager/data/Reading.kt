@@ -3,7 +3,7 @@ package com.sosnowskydevelop.metermanager.data
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import com.sosnowskydevelop.metermanager.Unit
-import java.time.LocalDate
+import java.util.Date
 
 @Entity(
     tableName = "reading",
@@ -18,7 +18,7 @@ data class Reading(
     val id: Int,
     val meterId: Int,
     @TypeConverters(DateConverter::class)
-    var date: LocalDate,
+    var date: Date?,
     var value: Float,
     var unit: Unit
 )

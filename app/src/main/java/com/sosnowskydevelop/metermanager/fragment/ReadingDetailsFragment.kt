@@ -19,10 +19,12 @@ import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.R
 import com.sosnowskydevelop.metermanager.Unit
 import com.sosnowskydevelop.metermanager.data.DateConverter
+import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.data.Reading
 import com.sosnowskydevelop.metermanager.databinding.ReadingDetailsFragmentBinding
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModelFactory
+import java.lang.NumberFormatException
 import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
@@ -30,7 +32,7 @@ import java.util.*
 class ReadingDetailsFragment : Fragment() {
 
     private lateinit var binding: ReadingDetailsFragmentBinding
-    private var meterId = 0
+    private lateinit var meter: Meter
     private lateinit var reading: Reading
     private var isNew = true
     private lateinit var valueField: EditText
@@ -71,11 +73,7 @@ class ReadingDetailsFragment : Fragment() {
             } else {
                 dateIsWrong = false
             }
-            dateField.setText(
-                DateConverter.dateToString(
-                    selectedDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate()
-                )
-            )
+            dateField.setText(DateConverter.dateToString(selectedDate))
         }
         binding.btnReadingAddDate.setOnClickListener {
             dateField.background = resources.getDrawable(R.drawable.edit_text_border) // TODO replace deprecated method
@@ -95,13 +93,13 @@ class ReadingDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val args: ReadingDetailsFragmentArgs by navArgs()
-        meterId = args.meterId
+        meter = args.meter
         val readingId = args.readingId
         isNew = readingId == -1
 
         if (isNew) {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.reading_new_title)
-            binding.readingDateEdittext.setText(DateConverter.dateToString(LocalDate.now()))
+            binding.readingDateEdittext.setText(DateConverter.dateToString(Date()))
         } else {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.meter_edit_title)
             readingViewModel.getReadingById(readingId).observe(this, {
@@ -121,28 +119,51 @@ class ReadingDetailsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.reading_menu_save -> {
-                val isValueInputted = TextUtils.isEmpty(valueField.text)
-                // TODO check that new not grater then last
-
-                if (isValueInputted) {
+                val newValue: Float
+                try {
+                    newValue = valueField.text.toString().toFloat()
+                } catch(e: NumberFormatException) {
                     readingValueError(R.string.reading_value_empty)
-                } else if (dateIsWrong) {
+                    return true
+                }
+                val date = DateConverter.stringToDate(dateField.text.toString())
+                if (dateIsWrong) {
                     Toast.makeText(activity, R.string.reading_future_date, Toast.LENGTH_LONG).show()
-                } else {
-                    val newReading = Reading(
-                        id = 0,
-                        meterId = meterId,
-                        date = DateConverter.stringToDate(dateField.text.toString()),
-                        value = valueField.text.toString().toFloat(),
-                        unit = Unit.METERS3
-                    )
-                    readingViewModel.insert(newReading)
-                    findNavController().navigate(
-                        ReadingDetailsFragmentDirections.actionReadingDetailsFragmentToReadingListFragment(
-                            locationId = 0,
-                            meterId = meterId
-                        )
-                    ) // TODO locationID
+                } else if (date != null) {
+                    if (newValue < meter.lastReadingValue && date >= meter.lastReadingDate) {
+                        readingValueError(R.string.last_reading_less_then_new_err)
+                    } else {
+                        if (isNew) {
+                            val newReading = Reading(
+                                id = 0,
+                                meterId = meter.id,
+                                date = date,
+                                value = newValue,
+                                unit = meter.unit
+                            )
+                            readingViewModel.insert(newReading)
+                            changeLastReading(newReading)
+                            closeOk(R.string.reading_added)
+
+                        } else {
+                            var isChanged = false
+                            if (reading.value != newValue) {
+                                reading.value = newValue
+                                isChanged = true
+                            }
+                            if (reading.date != date) {
+                                reading.date = date
+                                isChanged = true
+                            }
+                            if (isChanged) {
+                                readingViewModel.update(reading)
+                                changeLastReading(reading)
+                                closeOk(R.string.reading_edited)
+                            } else {
+                                closeOk(null)
+                            }
+                        }
+                    }
                 }
                 true
             }
@@ -155,5 +176,28 @@ class ReadingDetailsFragment : Fragment() {
         valueField.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
         valueField.requestFocus()
     }
+    private fun closeOk(messageId: Int?) {
+        if (messageId != null) {
+            Toast.makeText(
+                activity,
+                getString(messageId),
+                Toast.LENGTH_LONG,
+            ).show()
+        }
 
+        findNavController().navigate(
+            ReadingDetailsFragmentDirections.actionReadingDetailsFragmentToReadingListFragment(
+                locationId = meter.locationId,
+                meter = meter
+            )
+        )
+    }
+
+    private fun changeLastReading(reading: Reading) {
+        if (reading.date!! > meter.lastReadingDate || reading.value > meter.lastReadingValue) {
+            readingViewModel.addLastReading(reading)
+            meter.lastReadingDate = reading.date
+            meter.lastReadingValue = reading.value
+        }
+    }
 }

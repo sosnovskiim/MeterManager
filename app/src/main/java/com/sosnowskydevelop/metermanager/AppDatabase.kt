@@ -13,7 +13,7 @@ import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.data.Reading
 
-@Database(entities = [Location::class, Meter::class, Reading::class], version = 6, exportSchema = true)
+@Database(entities = [Location::class, Meter::class, Reading::class], version = 9, exportSchema = true)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase: RoomDatabase() {
 

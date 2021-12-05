@@ -1,43 +1,46 @@
 package com.sosnowskydevelop.metermanager.data
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.util.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class DateConverter {
 
     @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
     @TypeConverter
-    fun longToDate(value: Long?): LocalDate? {
-        return value?.let { Date(it).toInstant().atZone(ZoneId.systemDefault()).toLocalDate() }
+    fun longToDate(value: Long?): Date? {
+        return value?.let { Date(it) }
     }
 
     @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
     @TypeConverter
-    fun dateToLong(date: LocalDate?): Long? {
-        return date?.toEpochDay()
+    fun dateToLong(date: Date?): Long? {
+        return date?.time
     }
 
     companion object {
         private const val template = "dd.MM.yyyy"
 
+        @SuppressLint("SimpleDateFormat")
         @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
-        fun dateToString(date: LocalDate?): String {
+        fun dateToString(date: Date?): String {
             return if (date == null) {
                 ""
             } else {
-                date.format (DateTimeFormatter.ofPattern(template))
+                val format = SimpleDateFormat(template)
+                format.format(date)
             }
         }
 
+        @SuppressLint("SimpleDateFormat")
         @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
-        fun stringToDate(string: String): LocalDate {
-            val formatter = DateTimeFormatter.ofPattern(template)
-            return LocalDate.parse(string, formatter)
+        fun stringToDate(string: String): Date? {
+            val formatter: DateFormat = SimpleDateFormat(template)
+            return formatter.parse(string)
         }
     }
 }

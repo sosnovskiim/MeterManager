@@ -3,6 +3,7 @@ package com.sosnowskydevelop.metermanager.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.sosnowskydevelop.metermanager.data.Reading
+import java.util.*
 
 @Dao
 interface ReadingDao {
@@ -24,6 +25,6 @@ interface ReadingDao {
     @Query("DELETE FROM reading WHERE meterId = :meterID")
     suspend fun deleteAllReadingsByMeterID(meterID: Int)
 
-    @Query("UPDATE meter SET lastReadingID = :lastReadingId WHERE _id = :meterId")
-    suspend fun addLastReadingToMeter(meterId: Int, lastReadingId: Int)
+    @Query("UPDATE meter SET lastReadingDate = :date, lastReadingValue = :value WHERE _id = :meterId")
+    suspend fun addLastReadingToMeter(meterId: Int, date: Date?, value: Float)
 }

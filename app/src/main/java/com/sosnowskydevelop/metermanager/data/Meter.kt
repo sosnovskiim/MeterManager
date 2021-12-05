@@ -3,7 +3,8 @@ package com.sosnowskydevelop.metermanager.data
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import com.sosnowskydevelop.metermanager.Unit
-import java.time.LocalDate
+import java.io.Serializable
+import java.util.*
 
 @Entity(
     tableName = "meter",
@@ -12,12 +13,7 @@ import java.time.LocalDate
             entity = Location::class,
             parentColumns = arrayOf("_id"),
             childColumns = arrayOf("locationId"),
-            onDelete = CASCADE)
-        , ForeignKey(
-            entity = Reading::class,
-            parentColumns = arrayOf("_id"),
-            childColumns = arrayOf("lastReadingID"))
-            ])
+            onDelete = CASCADE)])
 data class Meter(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "_id")
@@ -25,19 +21,11 @@ data class Meter(
     val locationId: Int,
     var name: String,
     var unit: Unit
-) {
-    @Ignore
-    private var lastReading: Reading? = null
+) : Serializable {
+    @ColumnInfo(name="lastReadingDate")
+    @TypeConverters(DateConverter::class)
+    var lastReadingDate: Date? = null
 
-    @ColumnInfo(name="lastReadingID")
-    var lastReadingId: Int? = null
-
-    fun addLastReading(reading: Reading) {
-        lastReading = reading
-        lastReadingId = reading.id
-    }
-
-    fun getLastReadingDate(): LocalDate? {
-        return lastReading?.date
-    }
+    @ColumnInfo(name="lastReadingValue")
+    var lastReadingValue: Float = 0f
 }

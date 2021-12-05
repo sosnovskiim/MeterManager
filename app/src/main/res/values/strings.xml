@@ -50,6 +50,9 @@
     <string name="reading_new_title">New reading</string>
     <string name="reading_edit_title">Edit reading</string>
     <string name="save_new_reading">Save reading</string>
-    <string name="reading_value_empty">Input value</string>
+    <string name="reading_value_empty">Inputted value is invalid</string>
     <string name="reading_future_date">Date can\'t be from future</string>
+    <string name="last_reading_less_then_new_err">New value can\'t be less than last value</string>
+    <string name="reading_edited">Reading edited</string>
+    <string name="reading_added">Reading added</string>
 </resources>

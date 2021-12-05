@@ -51,23 +51,19 @@ class ReadingListFragment : Fragment() {
 
         val args: ReadingListFragmentArgs by navArgs()
         locationId = args.locationId
-        val meterId = args.meterId
+        meter = args.meter
 
-        meterViewModel.getMeterById(meterId = meterId).observe(this, {
-            meter = it
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = meter.name
-        })
-
-        val readingAdapter = ReadingListAdapter()
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = meter.name
+        val readingAdapter = ReadingListAdapter(meter)
         binding.rvReadingList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvReadingList.adapter = readingAdapter
-        readingViewModel.getAllReadingsByMeterId(meterId =meterId).observe(this, {
+        readingViewModel.getAllReadingsByMeterId(meterId = meter.id).observe(this, {
             it?.let { readingAdapter.submitList(it) }
         })
 
         binding.btnAddNewReading.setOnClickListener {
             findNavController().navigate(
-                ReadingListFragmentDirections.actionReadingListFragmentToReadingDetailsFragment(meter.id, -1))
+                ReadingListFragmentDirections.actionReadingListFragmentToReadingDetailsFragment(meter = meter, -1))
         }
     }
 

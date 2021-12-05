@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.sosnowskydevelop.metermanager.data.DateConverter
+import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.data.Reading
 import com.sosnowskydevelop.metermanager.databinding.ReadingListItemBinding
 import com.sosnowskydevelop.metermanager.fragment.ReadingListFragmentDirections
 
-class ReadingListAdapter : ListAdapter<Reading, ReadingListAdapter.ReadingViewHolder>(ReadingListAdapter) {
+class ReadingListAdapter(val meter: Meter) : ListAdapter<Reading, ReadingListAdapter.ReadingViewHolder>(ReadingListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ReadingViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -28,7 +29,7 @@ class ReadingListAdapter : ListAdapter<Reading, ReadingListAdapter.ReadingViewHo
             holder.itemView.findNavController().navigate(
                 ReadingListFragmentDirections
                     .actionReadingListFragmentToReadingDetailsFragmentEdit(
-                        meterId = currentReading.meterId,
+                        meter = meter,
                         readingId = currentReading.id
                     )
             )
