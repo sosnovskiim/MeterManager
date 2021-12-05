@@ -69,7 +69,10 @@ class MeterListFragment : Fragment() {
         locationViewModel.getLocationById(locationId = locationId).observe(this, {
             location = it
             actionBar?.title = location.name
-            binding.meterDescription.text = location.description
+            if (location.description != "") {
+                binding.meterDescription.text = location.description
+                binding.meterDescription.visibility = View.VISIBLE
+            }
         })
     }
 

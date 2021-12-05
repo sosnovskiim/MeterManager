@@ -15,12 +15,14 @@
             android:padding="@dimen/big_padding"
             android:textColor="@color/secondary_text"
             android:textSize="@dimen/description_font_size"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@+id/meter_recyclerview"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/black"
             android:id="@+id/meter_recyclerview"
             android:layout_width="0dp"
             android:layout_height="0dp"
