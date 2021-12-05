@@ -22,7 +22,6 @@ class ReadingListAdapter(val meter: Meter) : ListAdapter<Reading, ReadingListAda
         return ReadingViewHolder(binding)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
     override fun onBindViewHolder(holder: ReadingViewHolder, position: Int) {
         val currentReading = getItem(position)
         holder.itemView.setOnClickListener {

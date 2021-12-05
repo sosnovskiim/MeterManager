@@ -49,7 +49,6 @@ class ReadingDetailsFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = ReadingDetailsFragmentBinding.inflate(inflater, container, false)
         valueField = binding.readingValueEdittext
@@ -115,7 +114,6 @@ class ReadingDetailsFragment : Fragment() {
         inflater.inflate(R.menu.reading_details_menu, menu)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.reading_menu_save -> {
@@ -193,11 +191,15 @@ class ReadingDetailsFragment : Fragment() {
         )
     }
 
+    // TODO подумать про логику этого метода
     private fun changeLastReading(reading: Reading) {
-        if (reading.date!! > meter.lastReadingDate || reading.value > meter.lastReadingValue) {
-            readingViewModel.addLastReading(reading)
-            meter.lastReadingDate = reading.date
-            meter.lastReadingValue = reading.value
+        if (meter.lastReadingDate != null) {
+            if (reading.date!! < meter.lastReadingDate && reading.value < meter.lastReadingValue) {
+                return
+            }
         }
+        readingViewModel.addLastReading(reading)
+        meter.lastReadingDate = reading.date
+        meter.lastReadingValue = reading.value
     }
 }

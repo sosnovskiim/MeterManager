@@ -27,7 +27,6 @@ class MeterListFragment : Fragment() {
     private lateinit var binding: MeterListFragmentBinding
     lateinit var location: Location
 
-    // TODO Two ViewModels...
     private val locationViewModel: LocationViewModel by viewModels {
         LocationViewModelFactory((activity?.application as MetersApplication).locationRepository)
     }

@@ -20,7 +20,6 @@ class MeterListAdapter : ListAdapter<Meter, MeterListAdapter.MeterViewHolder>(Me
         return MeterViewHolder(binding)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O) // TODO хз чё это
     override fun onBindViewHolder(holder: MeterViewHolder, position: Int) {
         val currentMeter = getItem(position)
         holder.itemView.setOnClickListener {

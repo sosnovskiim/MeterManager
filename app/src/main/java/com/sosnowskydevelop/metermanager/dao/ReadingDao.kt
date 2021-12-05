@@ -7,7 +7,7 @@ import java.util.*
 
 @Dao
 interface ReadingDao {
-    @Query("SELECT * FROM reading WHERE meterId = :meterID ORDER BY _id DESC")
+    @Query("SELECT * FROM reading WHERE meterId = :meterID ORDER BY date DESC, _id DESC")
     fun getAllReadingsByMeterID(meterID: Int): LiveData<List<Reading>>
 
     @Query("SELECT * FROM reading WHERE _id = :readingId")
