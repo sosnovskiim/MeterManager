@@ -85,5 +85,29 @@
         <action
             android:id="@+id/action_readingListFragment_to_meterDetailsFragment"
             app:destination="@id/meterDetailsFragment" />
+        <action
+            android:id="@+id/action_readingListFragment_to_readingDetailsFragment"
+            app:destination="@id/readingDetailsFragment" />
+        <action
+            android:id="@+id/action_readingListFragment_to_readingDetailsFragment_edit"
+            app:destination="@id/readingDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/readingDetailsFragment"
+        android:name="com.sosnowskydevelop.metermanager.fragment.ReadingDetailsFragment"
+        android:label="ReadingDetailsFragment" >
+        <action
+            android:id="@+id/action_readingDetailsFragment_to_readingListFragment"
+            app:destination="@id/readingListFragment"
+            app:popUpTo="@id/readingListFragment"
+            app:popUpToInclusive="true"/>
+        <argument
+            android:name="meterId"
+            app:argType="integer"
+            android:defaultValue="-1" />
+        <argument
+            android:name="readingId"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>

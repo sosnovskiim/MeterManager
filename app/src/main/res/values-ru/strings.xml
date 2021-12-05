@@ -16,7 +16,7 @@
     <string name="location_delete_dialog_positive">Да</string>
     <string name="location_delete_dialog_negative">Нет</string>
     <string name="location_delete_toast">Помещение удалено</string>
-    <string name="add_hint">Добавить новый счётчик</string>
+    <string name="add_meter_hint">Добавить новый счётчик</string>
     <string name="new_meter_name_hint">Введите название счетчика</string>
     <string name="reading_units_label">Единицы измерения</string>
     <string name="kv">кВт</string>
@@ -39,4 +39,17 @@
     <string name="meter_delete_toast">Счетчик удален</string>
     <string name="last_reading">Последнее показание:</string>
     <string name="meter_edited">Счётчик изменен</string>
+    <string name="date">Дата</string>
+    <string name="value">Показание</string>
+    <string name="add_new_reading">Добавить новое показание</string>
+    <string name="add_reading_hint">Добавить показание</string>
+    <string name="value_label">Показание</string>
+    <string name="new_reading_value_hint">Введите показание</string>
+    <string name="date_label">Дата</string>
+    <string name="open_calendar">Открыть календарь</string>
+    <string name="reading_new_title">Новое показание</string>
+    <string name="reading_edit_title">Редактирование</string>
+    <string name="save_new_reading">Сохранить показание</string>
+    <string name="reading_value_empty">Введите показание</string>
+    <string name="reading_future_date">Дата не может быть из будущего</string>
 </resources>

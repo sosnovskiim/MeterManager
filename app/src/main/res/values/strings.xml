@@ -16,7 +16,7 @@
     <string name="location_delete_dialog_positive">Yes</string>
     <string name="location_delete_dialog_negative">No</string>
     <string name="location_delete_toast">Location deleted</string>
-    <string name="add_hint">Add new meter</string>
+    <string name="add_meter_hint">Add new meter</string>
     <string name="new_meter_name_hint">Input name</string>
     <string name="reading_units_label">Reading units</string>
     <string name="kv">KV</string>
@@ -39,4 +39,17 @@
     <string name="meter_delete_toast">Meter deleted</string>
     <string name="last_reading">Last reading:</string>
     <string name="meter_edited">Meter edited</string>
+    <string name="date">Date</string>
+    <string name="value">Value</string>
+    <string name="add_new_reading">Add new reading</string>
+    <string name="add_reading_hint">Add reading</string>
+    <string name="value_label">Value</string>
+    <string name="new_reading_value_hint">Input value</string>
+    <string name="date_label">Date</string>
+    <string name="open_calendar">Open calendar</string>
+    <string name="reading_new_title">New reading</string>
+    <string name="reading_edit_title">Edit reading</string>
+    <string name="save_new_reading">Save reading</string>
+    <string name="reading_value_empty">Input value</string>
+    <string name="reading_future_date">Date can\'t be from future</string>
 </resources>

@@ -10,6 +10,4 @@ data class Location(
     @ColumnInfo(name = "_id")
     val id: Int,
     var name: String,
-    var description: String?) {
-    // TODO add list of meters
-}
+    var description: String?)

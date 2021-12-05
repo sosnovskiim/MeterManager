@@ -6,16 +6,21 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.R
+import com.sosnowskydevelop.metermanager.adapter.ReadingListAdapter
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.databinding.ReadingListFragmentBinding
 import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModelFactory
+import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModel
+import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModelFactory
 import java.util.*
 
 class ReadingListFragment : Fragment() {
@@ -27,16 +32,16 @@ class ReadingListFragment : Fragment() {
         MeterViewModelFactory((activity?.application as MetersApplication).meterRepository)
     }
 
+    private val readingViewModel: ReadingViewModel by viewModels {
+        ReadingViewModelFactory((activity?.application as MetersApplication).readingRepository)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = ReadingListFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -52,6 +57,18 @@ class ReadingListFragment : Fragment() {
             meter = it
             (requireActivity() as AppCompatActivity).supportActionBar?.title = meter.name
         })
+
+        val readingAdapter = ReadingListAdapter()
+        binding.rvReadingList.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvReadingList.adapter = readingAdapter
+        readingViewModel.getAllReadingsByMeterId(meterId =meterId).observe(this, {
+            it?.let { readingAdapter.submitList(it) }
+        })
+
+        binding.btnAddNewReading.setOnClickListener {
+            findNavController().navigate(
+                ReadingListFragmentDirections.actionReadingListFragmentToReadingDetailsFragment(meter.id, -1))
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -102,7 +119,8 @@ class ReadingListFragment : Fragment() {
                 true
             }
             R.id.edit_meter -> {
-                findNavController().navigate(ReadingListFragmentDirections.actionReadingListFragmentToMeterDetailsFragment(locationId, meter.id))
+                findNavController().navigate(
+                    ReadingListFragmentDirections.actionReadingListFragmentToMeterDetailsFragment(locationId, meter.id))
                 true
             }
             else -> super.onOptionsItemSelected(item)
