@@ -9,6 +9,8 @@ import android.widget.EditText
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -43,7 +45,7 @@ class LocationDetailsFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                binding.locationNameEdittext.background = resources.getDrawable(R.drawable.edit_text_border) // TODO replace deprecated method
+                binding.locationNameEdittext.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border)
             }
         })
         editTextName = binding.locationNameEdittext
@@ -115,7 +117,7 @@ class LocationDetailsFragment : Fragment() {
 
     private fun locationNameError(messageId: Int) {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
-        editTextName.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
+        editTextName.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
         editTextName.requestFocus()
     }
 

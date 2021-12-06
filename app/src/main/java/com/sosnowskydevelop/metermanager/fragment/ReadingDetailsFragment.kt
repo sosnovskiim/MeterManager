@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -57,7 +58,7 @@ class ReadingDetailsFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                valueField.background = resources.getDrawable(R.drawable.edit_text_border) // TODO replace deprecated method
+                valueField.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border)
             }
         })
         val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, day ->
@@ -67,7 +68,7 @@ class ReadingDetailsFragment : Fragment() {
             val selectedDate = calendar.time
             if (selectedDate > Date()) {
                 dateField.background =
-                    resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
+                    ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
                 dateIsWrong = true
             } else {
                 dateIsWrong = false
@@ -75,7 +76,7 @@ class ReadingDetailsFragment : Fragment() {
             dateField.setText(DateConverter.dateToString(selectedDate))
         }
         binding.btnReadingAddDate.setOnClickListener {
-            dateField.background = resources.getDrawable(R.drawable.edit_text_border) // TODO replace deprecated method
+            dateField.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border)
             DatePickerDialog(
                 requireContext(),
                 dateSetListener,
@@ -171,7 +172,7 @@ class ReadingDetailsFragment : Fragment() {
 
     private fun readingValueError(messageId: Int) {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
-        valueField.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
+        valueField.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
         valueField.requestFocus()
     }
     private fun closeOk(messageId: Int?) {

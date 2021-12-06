@@ -8,6 +8,7 @@ import android.view.*
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -52,7 +53,7 @@ class MeterDetailsFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                binding.meterNameEdittext.background = resources.getDrawable(R.drawable.edit_text_border) // TODO replace deprecated method
+                binding.meterNameEdittext.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border)
             }
         })
 
@@ -109,7 +110,7 @@ class MeterDetailsFragment : Fragment() {
                     if (isNew) {
                         if (!binding.rbKv.isChecked && !binding.rbM3.isChecked) {
                             Toast.makeText(activity, getString(R.string.input_meter_reading_err), Toast.LENGTH_LONG).show()
-                            binding.rgReadingUnits.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
+                            binding.rgReadingUnits.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
                         } else {
                             meterViewModel.isMeterDuplicate(
                                 meterId = 0,
@@ -169,7 +170,7 @@ class MeterDetailsFragment : Fragment() {
 
     private fun meterNameError(messageId: Int) {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
-        name.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
+        name.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
         name.requestFocus()
     }
 
