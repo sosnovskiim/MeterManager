@@ -1,15 +1,12 @@
 package com.sosnowskydevelop.metermanager.fragment
 
 import android.app.DatePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -18,7 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.R
-import com.sosnowskydevelop.metermanager.Unit
 import com.sosnowskydevelop.metermanager.data.DateConverter
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.data.Reading
@@ -26,8 +22,6 @@ import com.sosnowskydevelop.metermanager.databinding.ReadingDetailsFragmentBindi
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModelFactory
 import java.lang.NumberFormatException
-import java.time.LocalDate
-import java.time.ZoneId
 import java.util.*
 
 class ReadingDetailsFragment : Fragment() {
@@ -100,7 +94,7 @@ class ReadingDetailsFragment : Fragment() {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.reading_new_title)
             binding.readingDateEdittext.setText(DateConverter.dateToString(Date()))
         } else {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.meter_edit_title)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.reading_edit_title)
             readingViewModel.getReadingById(readingId).observe(this, {
                 reading = it
                 valueField.setText(reading.value.toString())
@@ -140,22 +134,8 @@ class ReadingDetailsFragment : Fragment() {
                                 unit = meter.unit
                             )
                             readingViewModel.insert(newReading)
-                            changeLastReading(newReading)
                             reading = newReading
-
-                            Toast.makeText(
-                                activity,
-                                getString(R.string.reading_added),
-                                Toast.LENGTH_LONG,
-                            ).show()
-
-                            findNavController().navigate(
-                                ReadingDetailsFragmentDirections
-                                    .actionReadingDetailsFragmentToReadingListFragment(
-                                        locationId = meter.locationId,
-                                        meter = meter,
-                                    )
-                            )
+                            changeLastReadingAndCloseFragment(R.string.reading_added)
                         } else {
                             var isChanged = false
                             if (reading.value != newValue) {
@@ -168,21 +148,10 @@ class ReadingDetailsFragment : Fragment() {
                             }
                             if (isChanged) {
                                 readingViewModel.update(reading)
-                                changeLastReading(reading)
-
-                                Toast.makeText(
-                                    activity,
-                                    getString(R.string.reading_edited),
-                                    Toast.LENGTH_LONG,
-                                ).show()
+                                changeLastReadingAndCloseFragment(R.string.reading_edited)
+                            } else {
+                                closeOk()
                             }
-
-                            findNavController().navigate(
-                                ReadingDetailsFragmentDirections
-                                    .actionReadingDetailsFragmentToReadingFragment(
-                                        meter = meter,
-                                        readingId = reading.id)
-                            )
                         }
                     }
                 }
@@ -198,15 +167,33 @@ class ReadingDetailsFragment : Fragment() {
         valueField.requestFocus()
     }
 
-    // TODO подумать про логику этого метода
-    private fun changeLastReading(reading: Reading) {
-        if (meter.lastReadingDate != null) {
-            if (reading.date!! < meter.lastReadingDate && reading.value < meter.lastReadingValue) {
-                return
+    private fun closeOk() {
+        findNavController().navigate(
+            ReadingDetailsFragmentDirections.actionReadingDetailsFragmentToReadingListFragment(
+                locationId = meter.locationId,
+                meter = meter
+            )
+        )
+    }
+
+    private fun changeLastReadingAndCloseFragment(messageId: Int) {
+        readingViewModel.getLastReadingByMeterID(meterId = meter.id).observe(this, {
+            if (it != null) {
+                meter.lastReadingValue = it.value
+                meter.lastReadingDate = it.date
+                readingViewModel.addLastReading(it)
+            } else {
+                meter.lastReadingValue = reading.value
+                meter.lastReadingDate = reading.date
+                readingViewModel.addLastReading(reading)
             }
-        }
-        readingViewModel.addLastReading(reading)
-        meter.lastReadingDate = reading.date
-        meter.lastReadingValue = reading.value
+            Toast.makeText(
+                activity,
+                getString(messageId),
+                Toast.LENGTH_LONG,
+            ).show()
+
+            closeOk()
+        })
     }
 }

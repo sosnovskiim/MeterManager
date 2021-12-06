@@ -1,8 +1,6 @@
 package com.sosnowskydevelop.metermanager.data
 
 import android.annotation.SuppressLint
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.room.TypeConverter
 import java.text.DateFormat
 import java.text.SimpleDateFormat
