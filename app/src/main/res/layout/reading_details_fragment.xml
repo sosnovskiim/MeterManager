@@ -60,5 +60,12 @@
                 android:background="@null"
                 android:contentDescription="@string/open_calendar" />
         </LinearLayout>
+        <CheckBox
+            android:id="@+id/is_last_reading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/details_margin"
+            android:checked="true"
+            android:text="@string/is_last_reading_checkbox"/>
     </LinearLayout>
 </layout>

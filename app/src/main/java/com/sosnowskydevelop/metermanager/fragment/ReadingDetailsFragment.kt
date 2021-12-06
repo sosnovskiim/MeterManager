@@ -39,6 +39,7 @@ class ReadingDetailsFragment : Fragment() {
     private lateinit var dateField: EditText
     private var calendar = Calendar.getInstance()
     private var dateIsWrong = false
+    private var isLastReading = true
 
     private val readingViewModel: ReadingViewModel by viewModels {
         ReadingViewModelFactory((activity?.application as MetersApplication).readingRepository)
@@ -99,6 +100,7 @@ class ReadingDetailsFragment : Fragment() {
         if (isNew) {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.reading_new_title)
             binding.readingDateEdittext.setText(DateConverter.dateToString(Date()))
+            binding.isLastReading.isChecked = true
         } else {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.meter_edit_title)
             readingViewModel.getReadingById(readingId).observe(this, {
@@ -106,6 +108,7 @@ class ReadingDetailsFragment : Fragment() {
                 valueField.setText(reading.value.toString())
                 dateField.setText(DateConverter.dateToString(reading.date))
             })
+            binding.isLastReading.isChecked = false
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -174,6 +177,7 @@ class ReadingDetailsFragment : Fragment() {
         valueField.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
         valueField.requestFocus()
     }
+
     private fun closeOk(messageId: Int?) {
         if (messageId != null) {
             Toast.makeText(
@@ -191,15 +195,11 @@ class ReadingDetailsFragment : Fragment() {
         )
     }
 
-    // TODO подумать про логику этого метода
     private fun changeLastReading(reading: Reading) {
-        if (meter.lastReadingDate != null) {
-            if (reading.date!! < meter.lastReadingDate && reading.value < meter.lastReadingValue) {
-                return
-            }
+        if (binding.isLastReading.isChecked) {
+            readingViewModel.addLastReading(reading)
+            meter.lastReadingDate = reading.date
+            meter.lastReadingValue = reading.value
         }
-        readingViewModel.addLastReading(reading)
-        meter.lastReadingDate = reading.date
-        meter.lastReadingValue = reading.value
     }
 }
