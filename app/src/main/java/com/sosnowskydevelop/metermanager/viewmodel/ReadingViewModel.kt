@@ -19,6 +19,10 @@ class ReadingViewModel(private val readingRepository: ReadingRepository) : ViewM
         return readingRepository.getReadingByID(readingId)
     }
 
+    fun getLastReadingByMeterID(meterId: Int): LiveData<Reading> {
+        return readingRepository.getLastReadingByMeterID(meterId)
+    }
+
     fun insert(reading: Reading) = viewModelScope.launch {
         readingRepository.insert(reading)
     }

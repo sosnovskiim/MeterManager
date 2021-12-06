@@ -55,5 +55,4 @@
     <string name="last_reading_less_then_new_err">New value can\'t be less than last value</string>
     <string name="reading_edited">Reading edited</string>
     <string name="reading_added">Reading added</string>
-    <string name="is_last_reading_checkbox">Is this reading is the last reading for this meter</string>
 </resources>

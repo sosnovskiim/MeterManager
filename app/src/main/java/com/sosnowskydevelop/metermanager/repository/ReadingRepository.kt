@@ -21,6 +21,12 @@ class ReadingRepository(private val readingDao: ReadingDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
+    fun getLastReadingByMeterID(meterId: Int): LiveData<Reading> {
+        return readingDao.getLastReadingByMeterID(meterId = meterId)
+    }
+
+    @Suppress("RedundantSuspendModifier")
+    @WorkerThread
     suspend fun insert(reading: Reading) {
         readingDao.insert(reading = reading)
     }

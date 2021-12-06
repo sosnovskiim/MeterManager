@@ -13,6 +13,9 @@ interface ReadingDao {
     @Query("SELECT * FROM reading WHERE _id = :readingId")
     fun getReadingByID(readingId: Int): LiveData<Reading>
 
+    @Query("SELECT * FROM reading WHERE meterId = :meterId ORDER BY date DESC, value DESC LIMIT 1")
+    fun getLastReadingByMeterID(meterId: Int): LiveData<Reading>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(reading: Reading): Long
 

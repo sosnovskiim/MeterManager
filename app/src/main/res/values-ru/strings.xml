@@ -55,5 +55,4 @@
     <string name="last_reading_less_then_new_err">New value can\'t be less than last value</string>
     <string name="reading_edited">Показание изменено</string>
     <string name="reading_added">Показание добавлено</string>
-    <string name="is_last_reading_checkbox">Является ли данное показание последним для данного счётчика</string>
 </resources>

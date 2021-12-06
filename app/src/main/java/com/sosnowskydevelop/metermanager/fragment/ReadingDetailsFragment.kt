@@ -1,15 +1,12 @@
 package com.sosnowskydevelop.metermanager.fragment
 
 import android.app.DatePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -17,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.R
-import com.sosnowskydevelop.metermanager.Unit
 import com.sosnowskydevelop.metermanager.data.DateConverter
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.data.Reading
@@ -25,8 +21,6 @@ import com.sosnowskydevelop.metermanager.databinding.ReadingDetailsFragmentBindi
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModelFactory
 import java.lang.NumberFormatException
-import java.time.LocalDate
-import java.time.ZoneId
 import java.util.*
 
 class ReadingDetailsFragment : Fragment() {
@@ -39,7 +33,6 @@ class ReadingDetailsFragment : Fragment() {
     private lateinit var dateField: EditText
     private var calendar = Calendar.getInstance()
     private var dateIsWrong = false
-    private var isLastReading = true
 
     private val readingViewModel: ReadingViewModel by viewModels {
         ReadingViewModelFactory((activity?.application as MetersApplication).readingRepository)
@@ -88,7 +81,6 @@ class ReadingDetailsFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -100,15 +92,13 @@ class ReadingDetailsFragment : Fragment() {
         if (isNew) {
             (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.reading_new_title)
             binding.readingDateEdittext.setText(DateConverter.dateToString(Date()))
-            binding.isLastReading.isChecked = true
         } else {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.meter_edit_title)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.reading_edit_title)
             readingViewModel.getReadingById(readingId).observe(this, {
                 reading = it
                 valueField.setText(reading.value.toString())
                 dateField.setText(DateConverter.dateToString(reading.date))
             })
-            binding.isLastReading.isChecked = false
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -143,9 +133,8 @@ class ReadingDetailsFragment : Fragment() {
                                 unit = meter.unit
                             )
                             readingViewModel.insert(newReading)
-                            changeLastReading(newReading)
-                            closeOk(R.string.reading_added)
-
+                            reading = newReading
+                            changeLastReadingAndCloseFragment(R.string.reading_added)
                         } else {
                             var isChanged = false
                             if (reading.value != newValue) {
@@ -158,10 +147,9 @@ class ReadingDetailsFragment : Fragment() {
                             }
                             if (isChanged) {
                                 readingViewModel.update(reading)
-                                changeLastReading(reading)
-                                closeOk(R.string.reading_edited)
+                                changeLastReadingAndCloseFragment(R.string.reading_edited)
                             } else {
-                                closeOk(null)
+                                closeOk()
                             }
                         }
                     }
@@ -178,15 +166,7 @@ class ReadingDetailsFragment : Fragment() {
         valueField.requestFocus()
     }
 
-    private fun closeOk(messageId: Int?) {
-        if (messageId != null) {
-            Toast.makeText(
-                activity,
-                getString(messageId),
-                Toast.LENGTH_LONG,
-            ).show()
-        }
-
+    private fun closeOk() {
         findNavController().navigate(
             ReadingDetailsFragmentDirections.actionReadingDetailsFragmentToReadingListFragment(
                 locationId = meter.locationId,
@@ -195,11 +175,24 @@ class ReadingDetailsFragment : Fragment() {
         )
     }
 
-    private fun changeLastReading(reading: Reading) {
-        if (binding.isLastReading.isChecked) {
-            readingViewModel.addLastReading(reading)
-            meter.lastReadingDate = reading.date
-            meter.lastReadingValue = reading.value
-        }
+    private fun changeLastReadingAndCloseFragment(messageId: Int) {
+        readingViewModel.getLastReadingByMeterID(meterId = meter.id).observe(this, {
+            if (it != null) {
+                meter.lastReadingValue = it.value
+                meter.lastReadingDate = it.date
+                readingViewModel.addLastReading(it)
+            } else {
+                meter.lastReadingValue = reading.value
+                meter.lastReadingDate = reading.date
+                readingViewModel.addLastReading(reading)
+            }
+            Toast.makeText(
+                activity,
+                getString(messageId),
+                Toast.LENGTH_LONG,
+            ).show()
+
+            closeOk()
+        })
     }
 }
