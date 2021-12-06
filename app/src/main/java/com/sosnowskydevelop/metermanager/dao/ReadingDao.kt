@@ -7,13 +7,13 @@ import java.util.*
 
 @Dao
 interface ReadingDao {
-    @Query("SELECT * FROM reading WHERE meterId = :meterID ORDER BY date DESC, _id DESC")
+    @Query("SELECT * FROM reading WHERE meterId = :meterID ORDER BY date DESC, value DESC, _id DESC")
     fun getAllReadingsByMeterID(meterID: Int): LiveData<List<Reading>>
 
     @Query("SELECT * FROM reading WHERE _id = :readingId")
     fun getReadingByID(readingId: Int): LiveData<Reading>
 
-    @Query("SELECT * FROM reading WHERE meterId = :meterId ORDER BY date DESC, value DESC LIMIT 1")
+    @Query("SELECT * FROM reading WHERE meterId = :meterId ORDER BY date DESC, value DESC, _id DESC LIMIT 1")
     fun getLastReadingByMeterID(meterId: Int): LiveData<Reading>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
