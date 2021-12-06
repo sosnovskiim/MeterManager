@@ -87,7 +87,6 @@ class ReadingDetailsFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -174,6 +173,7 @@ class ReadingDetailsFragment : Fragment() {
         valueField.background = resources.getDrawable(R.drawable.edit_text_border_err) // TODO replace deprecated method
         valueField.requestFocus()
     }
+
     private fun closeOk(messageId: Int?) {
         if (messageId != null) {
             Toast.makeText(
@@ -184,10 +184,10 @@ class ReadingDetailsFragment : Fragment() {
         }
 
         findNavController().navigate(
-            ReadingDetailsFragmentDirections.actionReadingDetailsFragmentToReadingListFragment(
-                locationId = meter.locationId,
-                meter = meter
-            )
+            ReadingDetailsFragmentDirections
+                .actionReadingDetailsFragmentToReadingFragment(
+                    meter = meter,
+                    readingId = reading.id)
         )
     }
 
