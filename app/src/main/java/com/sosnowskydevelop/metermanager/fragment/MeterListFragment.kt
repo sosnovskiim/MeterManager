@@ -57,11 +57,6 @@ class MeterListFragment : Fragment() {
             it?.let { meterAdapter.submitList(it) }
         })
 
-        // TODO remove temp button
-        binding.meterDeleteBtn.setOnClickListener {
-            meterViewModel.deleteAllMetersByLocationId(locationId)
-        }
-
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
 

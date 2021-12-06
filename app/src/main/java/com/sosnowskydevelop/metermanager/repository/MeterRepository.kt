@@ -33,12 +33,6 @@ class MeterRepository(private val meterDao: MeterDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun deleteAllMetersByLocationId(locationId: Int) {
-        meterDao.deleteAllMetersByLocationID(locationId)
-    }
-
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
     suspend fun deleteMeter(meter: Meter) {
         meterDao.delete(meter = meter)
     }

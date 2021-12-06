@@ -26,21 +26,11 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:padding="@dimen/big_padding"
-            app:layout_constraintBottom_toTopOf="@+id/meter_delete_btn"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/meter_description"
             tools:listitem="@layout/meter_list_item" />
-
-        <Button
-            android:id="@+id/meter_delete_btn"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Delete all (temp)"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/meter_recyclerview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

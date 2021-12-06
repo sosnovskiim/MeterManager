@@ -22,10 +22,6 @@ class LocationViewModel(private val locationRepository: LocationRepository) : Vi
         locationRepository.update(location)
     }
 
-    fun deleteAll() = viewModelScope.launch {
-        locationRepository.deleteAllLocations()
-    }
-
     fun deleteLocation(location: Location) = viewModelScope.launch {
         locationRepository.deleteLocation(location = location)
     }

@@ -21,7 +21,4 @@ interface LocationDao {
 
     @Delete
     suspend fun delete(location: Location)
-
-    @Query("DELETE FROM location")
-    suspend fun deleteAllLocations()
 }

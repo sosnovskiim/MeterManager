@@ -22,9 +22,6 @@ interface MeterDao {
     @Delete
     suspend fun delete(meter: Meter)
 
-    @Query("DELETE FROM meter WHERE locationId = :locationID")
-    suspend fun deleteAllMetersByLocationID(locationID: Int)
-
     @Query("SELECT 1 FROM meter WHERE _id != :meterId AND locationId = :locationID AND name = :name")
     fun isMeterDuplicate(
         meterId: Int,
