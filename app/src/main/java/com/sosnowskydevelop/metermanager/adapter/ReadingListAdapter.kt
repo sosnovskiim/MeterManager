@@ -27,10 +27,9 @@ class ReadingListAdapter(val meter: Meter) : ListAdapter<Reading, ReadingListAda
         holder.itemView.setOnClickListener {
             holder.itemView.findNavController().navigate(
                 ReadingListFragmentDirections
-                    .actionReadingListFragmentToReadingDetailsFragmentEdit(
+                    .actionReadingListFragmentToReadingFragment(
                         meter = meter,
-                        readingId = currentReading.id
-                    )
+                        readingId = currentReading.id)
             )
         }
         holder.binding.readingItemValue.text = currentReading.value.toString()

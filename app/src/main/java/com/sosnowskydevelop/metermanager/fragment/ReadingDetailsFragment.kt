@@ -88,7 +88,6 @@ class ReadingDetailsFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -142,8 +141,21 @@ class ReadingDetailsFragment : Fragment() {
                             )
                             readingViewModel.insert(newReading)
                             changeLastReading(newReading)
-                            closeOk(R.string.reading_added)
+                            reading = newReading
 
+                            Toast.makeText(
+                                activity,
+                                getString(R.string.reading_added),
+                                Toast.LENGTH_LONG,
+                            ).show()
+
+                            findNavController().navigate(
+                                ReadingDetailsFragmentDirections
+                                    .actionReadingDetailsFragmentToReadingListFragment(
+                                        locationId = meter.locationId,
+                                        meter = meter,
+                                    )
+                            )
                         } else {
                             var isChanged = false
                             if (reading.value != newValue) {
@@ -157,10 +169,20 @@ class ReadingDetailsFragment : Fragment() {
                             if (isChanged) {
                                 readingViewModel.update(reading)
                                 changeLastReading(reading)
-                                closeOk(R.string.reading_edited)
-                            } else {
-                                closeOk(null)
+
+                                Toast.makeText(
+                                    activity,
+                                    getString(R.string.reading_edited),
+                                    Toast.LENGTH_LONG,
+                                ).show()
                             }
+
+                            findNavController().navigate(
+                                ReadingDetailsFragmentDirections
+                                    .actionReadingDetailsFragmentToReadingFragment(
+                                        meter = meter,
+                                        readingId = reading.id)
+                            )
                         }
                     }
                 }
@@ -174,22 +196,6 @@ class ReadingDetailsFragment : Fragment() {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
         valueField.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
         valueField.requestFocus()
-    }
-    private fun closeOk(messageId: Int?) {
-        if (messageId != null) {
-            Toast.makeText(
-                activity,
-                getString(messageId),
-                Toast.LENGTH_LONG,
-            ).show()
-        }
-
-        findNavController().navigate(
-            ReadingDetailsFragmentDirections.actionReadingDetailsFragmentToReadingListFragment(
-                locationId = meter.locationId,
-                meter = meter
-            )
-        )
     }
 
     // TODO подумать про логику этого метода
