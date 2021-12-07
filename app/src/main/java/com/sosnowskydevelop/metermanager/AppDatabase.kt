@@ -48,6 +48,7 @@ abstract class AppDatabase: RoomDatabase() {
         }
     }
 
+    /* Database migration example */
 //    @DeleteColumn(tableName = "location", columnName = "tmp")
 //    class AppAutoMigration: AutoMigrationSpec {}
 }
