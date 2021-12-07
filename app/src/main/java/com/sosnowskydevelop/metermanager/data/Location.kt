@@ -10,4 +10,7 @@ data class Location(
     @ColumnInfo(name = "_id")
     val id: Int,
     var name: String,
-    var description: String?)
+    var description: String?) {
+//    @ColumnInfo(defaultValue = "")
+//    var tmp = ""
+}
