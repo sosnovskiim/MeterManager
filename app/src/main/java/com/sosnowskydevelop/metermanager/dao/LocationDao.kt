@@ -3,6 +3,7 @@ package com.sosnowskydevelop.metermanager.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.sosnowskydevelop.metermanager.data.Location
+import androidx.room.Dao
 
 @Dao
 interface LocationDao {

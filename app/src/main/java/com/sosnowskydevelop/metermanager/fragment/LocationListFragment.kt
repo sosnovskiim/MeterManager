@@ -1,23 +1,29 @@
 package com.sosnowskydevelop.metermanager.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sosnowskydevelop.metermanager.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.sosnowskydevelop.metermanager.LocationListAdapter
+import com.sosnowskydevelop.metermanager.LoginActivity
+import com.sosnowskydevelop.metermanager.MetersApplication
+import com.sosnowskydevelop.metermanager.R
 import com.sosnowskydevelop.metermanager.databinding.LocationListFragmentBinding
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
 
 class LocationListFragment : Fragment() {
     private lateinit var binding: LocationListFragmentBinding
+
+    private lateinit var auth: FirebaseAuth
 
     private val locationViewModel: LocationViewModel by viewModels {
         LocationViewModelFactory((activity?.application as MetersApplication).locationRepository)
@@ -26,6 +32,8 @@ class LocationListFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        auth = Firebase.auth
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -56,6 +64,13 @@ class LocationListFragment : Fragment() {
         return when (item.itemId) {
             R.id.location_menu_add -> {
                 findNavController().navigate(LocationListFragmentDirections.actionLocationListFragmentToLocationDetailsFragment(0))
+                true
+            }
+            R.id.location_menu_logout -> {
+                auth.signOut()
+                val loginIntent = Intent(requireContext(), LoginActivity::class.java)
+                loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(loginIntent)
                 true
             }
             else -> super.onOptionsItemSelected(item)

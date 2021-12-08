@@ -57,4 +57,5 @@
     <string name="reading_added">Показание добавлено</string>
     <string name="reading_delete_dialog_message">Вы уверены что хотите удалить показание?</string>
     <string name="reading_delete_toast">Показание удалено</string>
+    <string name="logout">Logout</string>
 </resources>

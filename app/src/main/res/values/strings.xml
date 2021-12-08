@@ -57,4 +57,5 @@
     <string name="reading_added">Reading added</string>
     <string name="reading_delete_dialog_message">Are you sure you want to delete this reading?</string>
     <string name="reading_delete_toast">Reading deleted</string>
+    <string name="logout">Logout</string>
 </resources>

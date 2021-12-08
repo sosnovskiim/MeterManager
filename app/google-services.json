@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "710908015394",
+    "project_id": "metermanager-69514",
+    "storage_bucket": "metermanager-69514.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710908015394:android:66557d872f2471e44bab7b",
+        "android_client_info": {
+          "package_name": "com.sosnowskydevelop.metermanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710908015394-fpgv67mr9ehrd9sjud6adpks237vbndt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sosnowskydevelop.metermanager",
+            "certificate_hash": "81e697b5a55dd486f280e05d3364a0d2a43ec520"
+          }
+        },
+        {
+          "client_id": "710908015394-gmqjtkc97hrk35gk8i4qv192h7he6908.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmnlvjRjLY0sr-kmsEF6RhzfrSZSx1a7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710908015394-gmqjtkc97hrk35gk8i4qv192h7he6908.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
