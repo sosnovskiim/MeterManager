@@ -6,7 +6,7 @@
         android:title="@string/edit_hint"
         app:showAsAction="always" />
     <item android:id="@+id/delete_reading"
-        android:icon="@drawable/ic_action_delete"
+        android:icon="@drawable/delete_icon"
         android:title="@string/delete_hint"
         app:showAsAction="always" />
 </menu>

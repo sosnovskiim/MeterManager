@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:text="@string/name_label"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+
             android:paddingHorizontal="@dimen/medium_padding"
             android:layout_marginHorizontal="@dimen/details_margin"/>
         <EditText
@@ -20,7 +20,7 @@
             android:layout_height="50dp"
             android:hint="@string/new_location_name_hint"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:background="@drawable/edit_text_border"
             android:layout_marginHorizontal="@dimen/details_margin"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/new_location_description_label"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:layout_marginHorizontal="@dimen/details_margin"
             android:layout_marginTop="20dp"/>
@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/new_location_description_hint"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:background="@drawable/edit_text_border"
             android:layout_marginHorizontal="@dimen/details_margin"

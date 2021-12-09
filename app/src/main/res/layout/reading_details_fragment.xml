@@ -11,7 +11,7 @@
             android:layout_height="wrap_content"
             android:text="@string/value_label"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:layout_marginHorizontal="@dimen/details_margin"/>
         <EditText
@@ -20,7 +20,7 @@
             android:layout_height="50dp"
             android:hint="@string/new_reading_value_hint"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:background="@drawable/edit_text_border"
             android:layout_marginHorizontal="@dimen/details_margin"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:text="@string/date_label"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:layout_marginHorizontal="@dimen/details_margin"/>
         <LinearLayout
@@ -45,7 +45,7 @@
                 android:layout_weight="5"
                 android:hint="01.01.1990"
                 android:textSize="@dimen/main_font_size"
-                android:textColor="@color/main_text"
+                android:textColor="@color/main_text_day"
                 android:paddingHorizontal="@dimen/medium_padding"
                 android:background="@drawable/edit_text_border"
                 android:layout_marginHorizontal="@dimen/details_margin"

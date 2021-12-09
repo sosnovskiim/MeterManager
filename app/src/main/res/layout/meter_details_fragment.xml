@@ -12,7 +12,7 @@
             android:layout_height="wrap_content"
             android:text="@string/name_label"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:layout_marginHorizontal="@dimen/details_margin"/>
         <EditText
@@ -21,7 +21,7 @@
             android:layout_height="50dp"
             android:hint="@string/new_meter_name_hint"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:background="@drawable/edit_text_border"
             android:layout_marginHorizontal="@dimen/details_margin"
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:text="@string/reading_units_label"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:layout_marginHorizontal="@dimen/details_margin"
             android:layout_marginTop="20dp"/>
@@ -47,14 +47,14 @@
                 android:layout_height="wrap_content"
                 android:text="@string/kv"
                 android:textSize="@dimen/main_font_size"
-                android:textColor="@color/main_text"/>
+                android:textColor="@color/main_text_day"/>
             <RadioButton
                 android:id="@+id/rb_m3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/m3"
                 android:textSize="@dimen/main_font_size"
-                android:textColor="@color/main_text"/>
+                android:textColor="@color/main_text_day"/>
         </RadioGroup>
     </LinearLayout>
 </layout>

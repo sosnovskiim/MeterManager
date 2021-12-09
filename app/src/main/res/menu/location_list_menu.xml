@@ -5,5 +5,4 @@
         android:icon="@drawable/add_icon"
         app:showAsAction="always"
         android:title="@string/add_new_location"/>
-
 </menu>

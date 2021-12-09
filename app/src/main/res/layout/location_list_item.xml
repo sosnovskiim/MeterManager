@@ -10,9 +10,9 @@
             android:id="@+id/location_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_white"
+            android:background="@color/bg_day"
             android:textSize="@dimen/main_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             android:paddingHorizontal="@dimen/medium_padding"
             android:paddingTop="@dimen/big_padding"
             tools:text="Location"/>
@@ -20,9 +20,9 @@
             android:id="@+id/location_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/bg_white"
+            android:background="@color/bg_day"
             android:textSize="@dimen/description_font_size"
-            android:textColor="@color/main_text"
+            android:textColor="@color/main_text_day"
             tools:text="Location description"
             android:paddingHorizontal="@dimen/medium_padding"
             android:paddingBottom="@dimen/medium_padding"/>
