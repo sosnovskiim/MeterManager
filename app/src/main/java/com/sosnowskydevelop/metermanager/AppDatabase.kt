@@ -1,8 +1,10 @@
 package com.sosnowskydevelop.metermanager
 
 import android.content.Context
-import androidx.room.*
-import androidx.room.migration.AutoMigrationSpec
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.sosnowskydevelop.metermanager.dao.LocationDao
 import com.sosnowskydevelop.metermanager.dao.MeterDao
 import com.sosnowskydevelop.metermanager.dao.ReadingDao
@@ -52,7 +54,3 @@ abstract class AppDatabase: RoomDatabase() {
 //    @DeleteColumn(tableName = "location", columnName = "tmp")
 //    class AppAutoMigration: AutoMigrationSpec {}
 }
-
-//-list -v -alias androiddebugkey -keystore %USERPROFILE%\.android\debug.keystore
-
-//81:E6:97:B5:A5:5D:D4:86:F2:80:E0:5D:33:64:A0:D2:A4:3E:C5:20
