@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -102,6 +103,8 @@ class ReadingDetailsFragment : Fragment() {
             })
         }
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setFocusAndShowKeyboard(view = valueField)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -164,7 +167,17 @@ class ReadingDetailsFragment : Fragment() {
     private fun readingValueError(messageId: Int) {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
         valueField.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
-        valueField.requestFocus()
+
+        setFocusAndShowKeyboard(view = valueField)
+    }
+
+    private fun setFocusAndShowKeyboard(view: View) {
+        view.requestFocus()
+
+        val inputMethodManager: InputMethodManager? =
+            ContextCompat.getSystemService(requireContext(), InputMethodManager::class.java)
+
+        inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun closeOk() {
