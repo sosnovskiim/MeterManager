@@ -3,6 +3,7 @@ package com.sosnowskydevelop.metermanager
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -27,8 +28,9 @@ class LoginActivity : AppCompatActivity() {
                 firebaseAuthWithGoogle(account.idToken!!)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
+                Log.d("LoginActivity", "Fail")
             }
-        }
+        } else {Log.d("LoginActivity", "Fail2")}
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

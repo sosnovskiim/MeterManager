@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "710908015394-8jgrc5bf68hauf435gg2e8o8i2slpcr6.apps.googleusercontent.com",
+          "client_id": "710908015394-c016fvc2jag0i8qupkp7605gcvbp4cec.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.sosnowskydevelop.metermanager",
-            "certificate_hash": "2c95546063f4e78a432dac345169fffd5852216b"
+            "certificate_hash": "b55b5c7091524882d17b03b2ad052946ccf333f5"
           }
         },
         {
