@@ -14,19 +14,27 @@
       },
       "oauth_client": [
         {
-          "client_id": "710908015394-c016fvc2jag0i8qupkp7605gcvbp4cec.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.sosnowskydevelop.metermanager",
-            "certificate_hash": "b55b5c7091524882d17b03b2ad052946ccf333f5"
-          }
-        },
-        {
           "client_id": "710908015394-fpgv67mr9ehrd9sjud6adpks237vbndt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.sosnowskydevelop.metermanager",
             "certificate_hash": "81e697b5a55dd486f280e05d3364a0d2a43ec520"
+          }
+        },
+        {
+          "client_id": "710908015394-ko0erklvvfdunc4oqe5b1ab3h65r712j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sosnowskydevelop.metermanager",
+            "certificate_hash": "f421df2db6903c8ba371b4298661b62b1c6f129a"
+          }
+        },
+        {
+          "client_id": "710908015394-lt9hh1r1nktfanegb53uctag92nvsrpa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sosnowskydevelop.metermanager",
+            "certificate_hash": "b55b5c7091524882d17b03b2ad052946ccf333f5"
           }
         },
         {
