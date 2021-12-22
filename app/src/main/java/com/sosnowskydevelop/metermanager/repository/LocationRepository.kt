@@ -7,7 +7,11 @@ import com.google.firebase.ktx.Firebase
 import com.sosnowskydevelop.metermanager.dao.LocationDao
 import com.sosnowskydevelop.metermanager.data.Location
 
-class LocationRepository(private val locationDao: LocationDao) {
+class LocationRepository(
+    private val repository: Repository,
+
+    private val locationDao: LocationDao
+) {
     val allLocations: LiveData<List<Location>> = locationDao.getAllLocations()
 
     @Suppress("RedundantSuspendModifier")
@@ -35,16 +39,24 @@ class LocationRepository(private val locationDao: LocationDao) {
         saveToFirebase(location)
     }
 
-    @Suppress("RedundantSuspendModifier")
-    @WorkerThread
+//    @Suppress("RedundantSuspendModifier")
+//    @WorkerThread
     suspend fun deleteLocation(location: Location?) {
-        locationDao.delete(location = location)
-        location?.let {deleteFromFirebase(location = location)}
+        location?.let {
+            repository.deleteLocation(location = location)
+        }
     }
 
-    private fun deleteFromFirebase(location: Location) {
-        val db = Firebase.firestore
-
-        db.collection("location").document(location.id).delete()
-    }
+//    @Suppress("RedundantSuspendModifier")
+//    @WorkerThread
+//    suspend fun deleteLocation(location: Location?) {
+//        locationDao.delete(location = location)
+//        location?.let {deleteFromFirebase(location = location)}
+//    }
+//
+//    private fun deleteFromFirebase(location: Location) {
+//        val db = Firebase.firestore
+//
+//        db.collection("location").document(location.id).delete()
+//    }
 }
