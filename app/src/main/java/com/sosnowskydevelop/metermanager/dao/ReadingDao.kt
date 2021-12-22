@@ -8,26 +8,26 @@ import java.util.*
 @Dao
 interface ReadingDao {
     @Query("SELECT * FROM reading WHERE meterId = :meterID ORDER BY date DESC, value DESC, _id DESC")
-    fun getAllReadingsByMeterID(meterID: Int): LiveData<List<Reading>>
+    fun getAllReadingsByMeterID(meterID: String?): LiveData<List<Reading>>
 
     @Query("SELECT * FROM reading WHERE _id = :readingId")
-    fun getReadingByID(readingId: Int): LiveData<Reading>
+    fun getReadingByID(readingId: String?): LiveData<Reading>
 
     @Query("SELECT * FROM reading WHERE meterId = :meterId ORDER BY date DESC, value DESC, _id DESC LIMIT 1")
-    fun getLastReadingByMeterID(meterId: Int): LiveData<Reading>
+    fun getLastReadingByMeterID(meterId: String?): LiveData<Reading>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(reading: Reading): Long
+    suspend fun insert(reading: Reading)
 
     @Update
-    suspend fun update(reading: Reading)
+    suspend fun update(reading: Reading?)
 
     @Delete
-    suspend fun delete(reading: Reading)
+    suspend fun delete(reading: Reading?)
 
     @Query("DELETE FROM reading WHERE meterId = :meterID")
-    suspend fun deleteAllReadingsByMeterID(meterID: Int)
+    suspend fun deleteAllReadingsByMeterID(meterID: String)
 
     @Query("UPDATE meter SET lastReadingDate = :date, lastReadingValue = :value WHERE _id = :meterId")
-    suspend fun addLastReadingToMeter(meterId: Int, date: Date?, value: Float)
+    suspend fun addLastReadingToMeter(meterId: String?, date: Date?, value: Float?)
 }

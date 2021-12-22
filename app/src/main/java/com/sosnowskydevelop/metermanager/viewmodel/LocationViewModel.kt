@@ -1,32 +1,34 @@
 package com.sosnowskydevelop.metermanager.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.repository.LocationRepository
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class LocationViewModel(private val locationRepository: LocationRepository) : ViewModel() {
 
     val allLocations: LiveData<List<Location>> = locationRepository.allLocations
 
-    fun getLocationById(locationId: Int): LiveData<Location> {
-        return locationRepository.getLocationByID(locationId)
+    fun getLocationById(locationId: String?): LiveData<Location> {
+        return locationRepository.getLocationByID(locationId = locationId)
     }
 
     fun insert(location: Location) = viewModelScope.launch {
-        locationRepository.insert(location)
+        locationRepository.insert(location = location)
     }
 
     fun update(location: Location) = viewModelScope.launch {
-        locationRepository.update(location)
+        locationRepository.update(location = location)
     }
 
-    fun deleteLocation(location: Location) = viewModelScope.launch {
+    fun deleteLocation(location: Location?) = viewModelScope.launch {
         locationRepository.deleteLocation(location = location)
     }
 
-    fun isLocationNameUnique(name: String, id: Int): Boolean {
+    fun isLocationNameUnique(name: String, id: String): Boolean {
         allLocations.value?.forEach {
             if (it.name == name && it.id != id) {
                 return false

@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.sosnowskydevelop.metermanager.LocationListAdapter.LocationViewHolder
 import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.databinding.LocationListItemBinding
@@ -23,7 +23,7 @@ class LocationListAdapter : ListAdapter<Location, LocationViewHolder>(Companion)
         val currentLocation = getItem(position)
         holder.itemView.setOnClickListener {
             holder.itemView.findNavController().navigate(
-                LocationListFragmentDirections.actionLocationListFragmentToMeterListFragment(currentLocation.id))
+                LocationListFragmentDirections.actionLocationListFragmentToMeterListFragment(currentLocation))
         }
         holder.binding.locationName.text = currentLocation.name
         holder.binding.locationDescription.text = currentLocation.description

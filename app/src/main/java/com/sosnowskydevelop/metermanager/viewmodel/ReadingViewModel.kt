@@ -7,40 +7,39 @@ import androidx.lifecycle.viewModelScope
 import com.sosnowskydevelop.metermanager.data.Reading
 import com.sosnowskydevelop.metermanager.repository.ReadingRepository
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 
 class ReadingViewModel(private val readingRepository: ReadingRepository) : ViewModel() {
 
-    fun getAllReadingsByMeterId(meterId: Int): LiveData<List<Reading>> {
-        return readingRepository.getAllReadingsByMeterID(meterId)
+    fun getAllReadingsByMeterId(meterId: String?): LiveData<List<Reading>> {
+        return readingRepository.getAllReadingsByMeterID(meterId = meterId)
     }
 
-    fun getReadingById(readingId: Int): LiveData<Reading> {
-        return readingRepository.getReadingByID(readingId)
+    fun getReadingById(readingId: String?): LiveData<Reading> {
+        return readingRepository.getReadingByID(readingId = readingId)
     }
 
-    fun getLastReadingByMeterID(meterId: Int): LiveData<Reading> {
-        return readingRepository.getLastReadingByMeterID(meterId)
+    fun getLastReadingByMeterID(meterId: String?): LiveData<Reading> {
+        return readingRepository.getLastReadingByMeterID(meterId = meterId)
     }
 
     fun insert(reading: Reading) = viewModelScope.launch {
-        readingRepository.insert(reading)
+        readingRepository.insert(reading = reading)
     }
 
-    fun update(reading: Reading) = viewModelScope.launch {
-        readingRepository.update(reading)
+    fun update(reading: Reading?) = viewModelScope.launch {
+        readingRepository.update(reading = reading)
     }
 
-    fun deleteAllReadingsByMeterId(meterId: Int) = viewModelScope.launch {
-        readingRepository.deleteAllReadingsByMeterId(meterId)
+    fun deleteAllReadingsByMeterId(meterId: String) = viewModelScope.launch {
+        readingRepository.deleteAllReadingsByMeterId(meterId = meterId)
     }
 
-    fun delete(reading: Reading) = viewModelScope.launch {
+    fun delete(reading: Reading?) = viewModelScope.launch {
         readingRepository.delete(reading = reading)
     }
 
-    fun addLastReading(reading: Reading) = viewModelScope.launch {
-        readingRepository.addLastReading(meterId = reading.meterId, date = reading.date, value = reading.value)
+    fun addLastReading(reading: Reading?) = viewModelScope.launch {
+        readingRepository.addLastReading(meterId = reading?.meterId, date = reading?.date, value = reading?.value)
     }
 }
 

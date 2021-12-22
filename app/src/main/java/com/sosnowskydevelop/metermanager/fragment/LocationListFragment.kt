@@ -22,7 +22,6 @@ import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
 
 class LocationListFragment : Fragment() {
     private lateinit var binding: LocationListFragmentBinding
-
     private lateinit var auth: FirebaseAuth
 
     private val locationViewModel: LocationViewModel by viewModels {
@@ -63,7 +62,8 @@ class LocationListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.location_menu_add -> {
-                findNavController().navigate(LocationListFragmentDirections.actionLocationListFragmentToLocationDetailsFragment(0))
+                findNavController()
+                    .navigate(LocationListFragmentDirections.actionLocationListFragmentToLocationDetailsFragment(null))
                 true
             }
             R.id.location_menu_logout -> {

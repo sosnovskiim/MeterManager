@@ -12,20 +12,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.sosnowskydevelop.metermanager.*
-import com.sosnowskydevelop.metermanager.adapter.MeterListAdapter
-import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModel
-import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModelFactory
-import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
-import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
 import com.sosnowskydevelop.metermanager.MetersApplication
+import com.sosnowskydevelop.metermanager.R
+import com.sosnowskydevelop.metermanager.adapter.MeterListAdapter
 import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.databinding.MeterListFragmentBinding
+import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
+import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
+import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModel
+import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModelFactory
 
 class MeterListFragment : Fragment() {
 
     private lateinit var binding: MeterListFragmentBinding
-    lateinit var location: Location
+    private var location: Location? = null
 
     private val locationViewModel: LocationViewModel by viewModels {
         LocationViewModelFactory((activity?.application as MetersApplication).locationRepository)
@@ -48,26 +48,24 @@ class MeterListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val args: MeterListFragmentArgs by navArgs()
-        val locationId = args.locationId
+        location = args.location
         binding.meterRecyclerview.layoutManager = LinearLayoutManager(requireContext())
-        val meterAdapter = MeterListAdapter()
+        val meterAdapter = MeterListAdapter(location = location)
         binding.meterRecyclerview.adapter = meterAdapter
 
-        meterViewModel.getAllMetersByLocationId(locationId).observe(this, Observer {
-            it?.let { meterAdapter.submitList(it) }
-        })
+        meterViewModel.getAllMetersByLocationId(locationId = location?.id)
+            .observe(this, Observer { list ->
+                list?.let { meterAdapter.submitList(list) }
+            })
 
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        locationViewModel.getLocationById(locationId = locationId).observe(this, {
-            location = it
-            actionBar?.title = location.name
-            if (location.description != "") {
-                binding.meterDescription.text = location.description
-                binding.meterDescription.visibility = View.VISIBLE
-            }
-        })
+        actionBar?.title = location?.name
+        if (location?.description != "") {
+            binding.meterDescription.text = location?.description
+            binding.meterDescription.visibility = View.VISIBLE
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -83,7 +81,7 @@ class MeterListFragment : Fragment() {
                 builder.setMessage(
                     resources.getString(R.string.location_delete_dialog_message)
                             + ' '
-                            + location.name
+                            + location?.name
                             + '?'
                 )
                 val dialogClickListener = DialogInterface.OnClickListener { _, which ->
@@ -117,12 +115,12 @@ class MeterListFragment : Fragment() {
             }
             R.id.edit_location -> {
                 findNavController().navigate(
-                    MeterListFragmentDirections.actionMeterListFragmentToLocationDetailsFragment(location.id))
+                    MeterListFragmentDirections.actionMeterListFragmentToLocationDetailsFragment(location))
                 true
             }
             R.id.add_meter -> {
                 findNavController().navigate(
-                    MeterListFragmentDirections.actionMeterListFragmentToMeterDetailsFragment(location.id, 0)
+                    MeterListFragmentDirections.actionMeterListFragmentToMeterDetailsFragment(location, null)
                 )
                 true
             }

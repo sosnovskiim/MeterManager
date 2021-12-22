@@ -10,25 +10,25 @@ class LocationRepository(private val locationDao: LocationDao) {
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun getLocationByID(locationId: Int): LiveData<Location> {
-        return locationDao.getLocationByID(locationId)
+    fun getLocationByID(locationId: String?): LiveData<Location> {
+        return locationDao.getLocationByID(id = locationId)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(location: Location) {
-        locationDao.insert(location)
+        locationDao.insert(location = location)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun update(location: Location) {
-        locationDao.update(location)
+        locationDao.update(location = location)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun deleteLocation(location: Location) {
+    suspend fun deleteLocation(location: Location?) {
         locationDao.delete(location = location)
     }
 }

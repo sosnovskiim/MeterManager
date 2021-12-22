@@ -7,20 +7,19 @@ import android.text.TextWatcher
 import android.view.*
 import android.widget.EditText
 import android.widget.Toast
-
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
-import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.R
 import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.databinding.LocationDetailsFragmentBinding
+import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModel
+import com.sosnowskydevelop.metermanager.viewmodel.LocationViewModelFactory
+import java.util.*
 
 class LocationDetailsFragment : Fragment() {
 
@@ -28,7 +27,7 @@ class LocationDetailsFragment : Fragment() {
     private lateinit var editTextName: EditText
     private var isNew = true
     private var isChanged = false
-    private lateinit var location: Location
+    private var location: Location? = null
 
     private val locationViewModel: LocationViewModel by viewModels {
         LocationViewModelFactory((activity?.application as MetersApplication).locationRepository)
@@ -45,7 +44,8 @@ class LocationDetailsFragment : Fragment() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {
-                binding.locationNameEdittext.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border)
+                binding.locationNameEdittext.background =
+                    ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border)
             }
         })
         editTextName = binding.locationNameEdittext
@@ -56,17 +56,18 @@ class LocationDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val args: LocationDetailsFragmentArgs by navArgs()
-        val locationId = args.locationId
-        isNew = locationId == 0
+        location = args.location
+        isNew = location == null
         if (isNew) {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_new_title)
+            (requireActivity() as AppCompatActivity).supportActionBar?.title =
+                resources.getString(R.string.location_new_title)
         } else {
-            (requireActivity() as AppCompatActivity).supportActionBar?.title = resources.getString(R.string.location_edit_title)
-            locationViewModel.getLocationById(locationId).observe(this, {
-                location = it
+            (requireActivity() as AppCompatActivity).supportActionBar?.title =
+                resources.getString(R.string.location_edit_title)
+            location?.let {
                 binding.locationNameEdittext.setText(it.name)
                 binding.locationDescriptionEdittext.setText(it.description)
-            })
+            }
         }
 
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -84,28 +85,43 @@ class LocationDetailsFragment : Fragment() {
                 } else {
                     val description = binding.locationDescriptionEdittext.text.toString()
                     if (isNew) {
-                        if (!locationViewModel.isLocationNameUnique(editTextName.text.toString(), 0)) {
+                        if (!locationViewModel.isLocationNameUnique(
+                                editTextName.text.toString(),
+                                ""
+                            )
+                        ) {
                             locationNameError(R.string.input_location_name_duplicate_err)
                         } else {
-                            locationViewModel.insert(Location(0, editTextName.text.toString(), description))
+                            locationViewModel.insert(
+                                Location(
+                                    UUID.randomUUID().toString(),
+                                    editTextName.text.toString(),
+                                    description
+                                )
+                            )
                             isChanged = true
                             closeOk(R.string.location_added)
                         }
                     } else {
-                        if (!locationViewModel.isLocationNameUnique(editTextName.text.toString(), location.id)
-                        ) {
-                            locationNameError(R.string.input_location_name_duplicate_err)
-                        } else {
-                            if (location.name != editTextName.text.toString()) {
-                                location.name = editTextName.text.toString()
-                                isChanged = true
+                        location?.let {
+                            if (!locationViewModel.isLocationNameUnique(
+                                    editTextName.text.toString(),
+                                    it.id
+                                )
+                            ) {
+                                locationNameError(R.string.input_location_name_duplicate_err)
+                            } else {
+                                if (it.name != editTextName.text.toString()) {
+                                    it.name = editTextName.text.toString()
+                                    isChanged = true
+                                }
+                                if (it.description != description) {
+                                    it.description = description
+                                    isChanged = true
+                                }
+                                locationViewModel.update(it)
+                                closeOk(R.string.location_edited)
                             }
-                            if (location.description != description) {
-                                location.description = description
-                                isChanged = true
-                            }
-                            locationViewModel.update(location)
-                            closeOk(R.string.location_edited)
                         }
                     }
                 }
@@ -117,13 +133,17 @@ class LocationDetailsFragment : Fragment() {
 
     private fun locationNameError(messageId: Int) {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
-        editTextName.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
+        editTextName.background =
+            ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
         editTextName.requestFocus()
     }
 
     private fun closeOk(messageId: Int) {
-        if (isChanged) {Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()}
+        if (isChanged) {
+            Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
+        }
         findNavController().navigate(
-            LocationDetailsFragmentDirections.actionLocationDetailsFragmentToLocationListFragment())
+            LocationDetailsFragmentDirections.actionLocationDetailsFragmentToLocationListFragment()
+        )
     }
 }

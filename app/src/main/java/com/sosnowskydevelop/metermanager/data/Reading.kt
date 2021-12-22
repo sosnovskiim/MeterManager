@@ -3,7 +3,8 @@ package com.sosnowskydevelop.metermanager.data
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
 import com.sosnowskydevelop.metermanager.Unit
-import java.util.Date
+import java.io.Serializable
+import java.util.*
 
 @Entity(
     tableName = "reading",
@@ -13,12 +14,12 @@ import java.util.Date
         childColumns = arrayOf("meterId"),
         onDelete = CASCADE)])
 data class Reading(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "_id")
-    val id: Int,
-    val meterId: Int,
+    val id: String,
+    val meterId: String,
     @TypeConverters(DateConverter::class)
     var date: Date?,
-    var value: Float,
+    var value: Float?,
     var unit: Unit
-)
+) : Serializable

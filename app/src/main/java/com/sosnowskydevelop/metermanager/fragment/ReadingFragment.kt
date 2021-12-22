@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.R
 import com.sosnowskydevelop.metermanager.data.DateConverter
+import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.data.Reading
 import com.sosnowskydevelop.metermanager.databinding.ReadingFragmentBinding
@@ -21,8 +22,9 @@ import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModelFactory
 
 class ReadingFragment : Fragment() {
     private lateinit var binding: ReadingFragmentBinding
-    private lateinit var reading: Reading
-    private lateinit var meter: Meter
+    private var location: Location? = null
+    private var meter: Meter? = null
+    private var reading: Reading? = null
 
     private val readingViewModel: ReadingViewModel by viewModels {
         ReadingViewModelFactory((activity?.application as MetersApplication).readingRepository)
@@ -44,12 +46,10 @@ class ReadingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val args: ReadingFragmentArgs by navArgs()
         meter = args.meter
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = meter.name
-        readingViewModel.getReadingById(args.readingId).observe(this, {
-            reading = it
-            binding.readingDateValue.text = DateConverter.dateToString(it.date)
-            binding.readingValueValue.text = it.value.toString()
-        })
+        reading = args.reading
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = meter?.name
+        binding.readingDateValue.text = DateConverter.dateToString(reading?.date)
+        binding.readingValueValue.text = reading?.value.toString()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -75,7 +75,7 @@ class ReadingFragment : Fragment() {
                             findNavController().navigate(
                                 ReadingFragmentDirections
                                     .actionReadingFragmentToReadingListFragment(
-                                        locationId = meter.locationId,
+                                        location = location,
                                         meter = meter)
                             )
                         }
@@ -98,8 +98,9 @@ class ReadingFragment : Fragment() {
                 findNavController().navigate(
                     ReadingFragmentDirections
                         .actionReadingFragmentToReadingDetailsFragment(
+                            location = location,
                             meter = meter,
-                            readingId = reading.id)
+                            reading = reading)
                 )
                 true
             }

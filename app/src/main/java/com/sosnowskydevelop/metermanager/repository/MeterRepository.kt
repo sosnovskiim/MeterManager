@@ -9,39 +9,39 @@ class MeterRepository(private val meterDao: MeterDao) {
 
     //@Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun getAllMetersByLocationID(locationId: Int): LiveData<List<Meter>> {
-        return meterDao.getAllMetersByLocationID(locationId)
+    fun getAllMetersByLocationID(locationId: String?): LiveData<List<Meter>> {
+        return meterDao.getAllMetersByLocationID(locationID = locationId)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    fun getMeterByID(meterId: Int): LiveData<Meter> {
+    fun getMeterByID(meterId: String?): LiveData<Meter> {
         return meterDao.getMeterByID(meterId = meterId)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     suspend fun insert(meter: Meter) {
-        meterDao.insert(meter)
+        meterDao.insert(meter = meter)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun update(meter: Meter) {
-        meterDao.update(meter)
+    suspend fun update(meter: Meter?) {
+        meterDao.update(meter = meter)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
-    suspend fun deleteMeter(meter: Meter) {
+    suspend fun deleteMeter(meter: Meter?) {
         meterDao.delete(meter = meter)
     }
 
     @Suppress("RedundantSuspendModifier")
     @WorkerThread
     fun isMeterDuplicate(
-        meterId: Int,
-        locationId: Int,
+        meterId: String?,
+        locationId: String?,
         name: String,
     ): LiveData<String> {
         return meterDao.isMeterDuplicate(

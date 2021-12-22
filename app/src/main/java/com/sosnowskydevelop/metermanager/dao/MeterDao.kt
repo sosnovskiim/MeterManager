@@ -8,24 +8,24 @@ import com.sosnowskydevelop.metermanager.data.Meter
 interface MeterDao {
 
     @Query("SELECT * FROM meter WHERE locationId = :locationID ORDER BY _id DESC")
-    fun getAllMetersByLocationID(locationID: Int): LiveData<List<Meter>>
+    fun getAllMetersByLocationID(locationID: String?): LiveData<List<Meter>>
 
     @Query("SELECT * FROM meter WHERE _id = :meterId")
-    fun getMeterByID(meterId: Int): LiveData<Meter>
+    fun getMeterByID(meterId: String?): LiveData<Meter>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(meter: Meter)
 
     @Update
-    suspend fun update(meter: Meter)
+    suspend fun update(meter: Meter?)
 
     @Delete
-    suspend fun delete(meter: Meter)
+    suspend fun delete(meter: Meter?)
 
-    @Query("SELECT 1 FROM meter WHERE _id != :meterId AND locationId = :locationID AND name = :name")
+    @Query("SELECT 1 FROM meter WHERE _id != coalesce(:meterId, '') AND locationId = coalesce(:locationID, '') AND name = :name")
     fun isMeterDuplicate(
-        meterId: Int,
-        locationID: Int,
+        meterId: String?,
+        locationID: String?,
         name: String,
     ): LiveData<String>
 }

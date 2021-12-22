@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,18 +14,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.sosnowskydevelop.metermanager.MetersApplication
 import com.sosnowskydevelop.metermanager.R
 import com.sosnowskydevelop.metermanager.adapter.ReadingListAdapter
+import com.sosnowskydevelop.metermanager.data.Location
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.databinding.ReadingListFragmentBinding
 import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.MeterViewModelFactory
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModel
 import com.sosnowskydevelop.metermanager.viewmodel.ReadingViewModelFactory
-import java.util.*
 
 class ReadingListFragment : Fragment() {
     private lateinit var binding: ReadingListFragmentBinding
-    private var locationId: Int = 0
-    private lateinit var meter: Meter
+    private var location: Location? = null
+    private var meter: Meter? = null
 
     private val meterViewModel: MeterViewModel by viewModels {
         MeterViewModelFactory((activity?.application as MetersApplication).meterRepository)
@@ -50,20 +49,21 @@ class ReadingListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val args: ReadingListFragmentArgs by navArgs()
-        locationId = args.locationId
+        location = args.location
         meter = args.meter
 
-        (requireActivity() as AppCompatActivity).supportActionBar?.title = meter.name
-        val readingAdapter = ReadingListAdapter(meter)
+        (requireActivity() as AppCompatActivity).supportActionBar?.title = meter?.name
+        val readingAdapter = meter?.let {ReadingListAdapter(location = location, meter = it)}
         binding.rvReadingList.layoutManager = LinearLayoutManager(requireContext())
         binding.rvReadingList.adapter = readingAdapter
-        readingViewModel.getAllReadingsByMeterId(meterId = meter.id).observe(this, {
-            it?.let { readingAdapter.submitList(it) }
+        readingViewModel.getAllReadingsByMeterId(meterId = meter?.id).observe(this, {
+            it?.let { readingAdapter?.submitList(it) }
         })
 
         binding.btnAddNewReading.setOnClickListener {
             findNavController().navigate(
-                ReadingListFragmentDirections.actionReadingListFragmentToReadingDetailsFragment(meter = meter, -1))
+                ReadingListFragmentDirections
+                    .actionReadingListFragmentToReadingDetailsFragment(location = location, meter = meter, reading = null))
         }
     }
 
@@ -80,7 +80,7 @@ class ReadingListFragment : Fragment() {
                 builder.setMessage(
                     resources.getString(R.string.meter_delete_dialog_message)
                             + ' '
-                            + meter.name
+                            + meter?.name
                             + '?'
                 )
                 val dialogClickListener = DialogInterface.OnClickListener { _, which ->
@@ -95,7 +95,7 @@ class ReadingListFragment : Fragment() {
                             findNavController().navigate(
                                 ReadingListFragmentDirections
                                     .actionReadingListFragmentToMeterListFragment(
-                                        locationId = locationId
+                                        location = location
                                     )
                             )
                         }
@@ -116,7 +116,7 @@ class ReadingListFragment : Fragment() {
             }
             R.id.edit_meter -> {
                 findNavController().navigate(
-                    ReadingListFragmentDirections.actionReadingListFragmentToMeterDetailsFragment(locationId, meter.id))
+                    ReadingListFragmentDirections.actionReadingListFragmentToMeterDetailsFragment(location, meter))
                 true
             }
             else -> super.onOptionsItemSelected(item)

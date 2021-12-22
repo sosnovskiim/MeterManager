@@ -15,10 +15,10 @@ import java.util.*
             childColumns = arrayOf("locationId"),
             onDelete = CASCADE)])
 data class Meter(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "_id")
-    val id: Int,
-    val locationId: Int,
+    val id: String,
+    val locationId: String,
     var name: String,
     var unit: Unit
 ) : Serializable {
@@ -27,5 +27,5 @@ data class Meter(
     var lastReadingDate: Date? = null
 
     @ColumnInfo(name="lastReadingValue")
-    var lastReadingValue: Float = 0f
+    var lastReadingValue: Float? = 0f
 }

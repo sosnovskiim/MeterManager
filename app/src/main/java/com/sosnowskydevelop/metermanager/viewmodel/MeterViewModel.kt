@@ -1,35 +1,37 @@
 package com.sosnowskydevelop.metermanager.viewmodel
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.sosnowskydevelop.metermanager.data.Meter
 import com.sosnowskydevelop.metermanager.repository.MeterRepository
-import kotlinx.coroutines.*
-import java.lang.IllegalArgumentException
+import kotlinx.coroutines.launch
 
 class MeterViewModel(private val meterRepository: MeterRepository) : ViewModel() {
-    fun getAllMetersByLocationId(locationId: Int): LiveData<List<Meter>> {
-        return meterRepository.getAllMetersByLocationID(locationId)
+    fun getAllMetersByLocationId(locationId: String?): LiveData<List<Meter>> {
+        return meterRepository.getAllMetersByLocationID(locationId = locationId)
     }
 
-    fun getMeterById(meterId: Int): LiveData<Meter> {
-        return meterRepository.getMeterByID(meterId)
+    fun getMeterById(meterId: String?): LiveData<Meter> {
+        return meterRepository.getMeterByID(meterId = meterId)
     }
 
     fun insert(meter: Meter) = viewModelScope.launch {
-        meterRepository.insert(meter)
+        meterRepository.insert(meter = meter)
     }
 
-    fun update(meter: Meter) = viewModelScope.launch {
-        meterRepository.update(meter)
+    fun update(meter: Meter?) = viewModelScope.launch {
+        meterRepository.update(meter = meter)
     }
 
-    fun deleteMeter(meter: Meter) = viewModelScope.launch {
+    fun deleteMeter(meter: Meter?) = viewModelScope.launch {
         meterRepository.deleteMeter(meter = meter)
     }
 
     fun isMeterDuplicate(
-        meterId: Int,
-        locationId: Int,
+        meterId: String?,
+        locationId: String?,
         name: String,
     ): LiveData<String> {
         return meterRepository.isMeterDuplicate(
