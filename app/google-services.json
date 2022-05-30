@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "710908015394-ht1550b2m9la9f6l3p1v1fsjv04td9d4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sosnowskydevelop.metermanager",
+            "certificate_hash": "02e0be83c67348312ef13db283f7efd41f828260"
+          }
+        },
+        {
           "client_id": "710908015394-ko0erklvvfdunc4oqe5b1ab3h65r712j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
