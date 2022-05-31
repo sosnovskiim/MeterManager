@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MeterManager</string>
+    <string name="app_name">Meter manager</string>
     <string name="locations_title">Locations</string>
     <string name="location_edit_title">Edit location</string>
     <string name="location_new_title">New location</string>
