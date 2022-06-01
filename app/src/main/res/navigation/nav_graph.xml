@@ -126,9 +126,13 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_readingFragment_to_readingListFragment"
-            app:destination="@id/readingListFragment" />
+            app:destination="@id/readingListFragment"
+            app:popUpTo="@id/readingListFragment"
+            app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_readingFragment_to_readingDetailsFragment"
-            app:destination="@id/readingDetailsFragment" />
+            app:destination="@id/readingDetailsFragment"
+            app:popUpTo="@id/readingDetailsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
