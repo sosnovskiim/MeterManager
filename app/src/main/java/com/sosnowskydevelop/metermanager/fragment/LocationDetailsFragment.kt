@@ -5,12 +5,13 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.*
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -70,6 +71,8 @@ class LocationDetailsFragment : Fragment() {
         }
 
         (requireActivity() as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        setFocusAndShowKeyboard(view = editTextName)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -118,7 +121,17 @@ class LocationDetailsFragment : Fragment() {
     private fun locationNameError(messageId: Int) {
         Toast.makeText(activity, getString(messageId), Toast.LENGTH_LONG).show()
         editTextName.background = ContextCompat.getDrawable(requireContext(), R.drawable.edit_text_border_err)
-        editTextName.requestFocus()
+
+        setFocusAndShowKeyboard(view = editTextName)
+    }
+
+    private fun setFocusAndShowKeyboard(view: View) {
+        view.requestFocus()
+
+        val inputMethodManager: InputMethodManager? =
+            getSystemService(requireContext(), InputMethodManager::class.java)
+
+        inputMethodManager?.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun closeOk(messageId: Int) {
