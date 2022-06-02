@@ -25,6 +25,12 @@ interface ReadingDao {
     @Delete
     suspend fun delete(reading: Reading)
 
+    @Query ("UPDATE meter " +
+            "SET lastReadingDate = (SELECT MAX(date) FROM reading WHERE meterID = :meterId GROUP BY meterID), " +
+                "lastReadingValue = IFNULL((SELECT MAX(value) FROM reading WHERE meterId = :meterId and date = (SELECT MAX(date) FROM reading WHERE meterID = :meterId GROUP BY meterID) GROUP BY meterID, date), 0) " +
+            "WHERE _id = :meterId")
+    suspend fun updateMeterAfterDelete(meterId: Int)
+
     @Query("DELETE FROM reading WHERE meterId = :meterID")
     suspend fun deleteAllReadingsByMeterID(meterID: Int)
 

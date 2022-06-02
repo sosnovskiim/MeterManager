@@ -53,21 +53,21 @@ class MeterListFragment : Fragment() {
         val meterAdapter = MeterListAdapter()
         binding.meterRecyclerview.adapter = meterAdapter
 
-        meterViewModel.getAllMetersByLocationId(locationId).observe(this, Observer {
+        meterViewModel.getAllMetersByLocationId(locationId).observe(viewLifecycleOwner, Observer {
             it?.let { meterAdapter.submitList(it) }
         })
 
         val actionBar = (requireActivity() as AppCompatActivity).supportActionBar
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-        locationViewModel.getLocationById(locationId = locationId).observe(this, {
+        locationViewModel.getLocationById(locationId = locationId).observe(viewLifecycleOwner) {
             location = it
             actionBar?.title = location.name
             if (location.description != "") {
                 binding.meterDescription.text = location.description
                 binding.meterDescription.visibility = View.VISIBLE
             }
-        })
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

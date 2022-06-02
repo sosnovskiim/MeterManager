@@ -47,6 +47,7 @@ class ReadingRepository(private val readingDao: ReadingDao) {
     @WorkerThread
     suspend fun delete(reading: Reading) {
         readingDao.delete(reading = reading)
+        readingDao.updateMeterAfterDelete(meterId = reading.meterId)
     }
 
     @Suppress("RedundantSuspendModifier")
