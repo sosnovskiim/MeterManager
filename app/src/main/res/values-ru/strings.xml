@@ -57,5 +57,10 @@
     <string name="reading_added">Показание добавлено</string>
     <string name="reading_delete_dialog_message">Вы уверены что хотите удалить показание?</string>
     <string name="reading_delete_toast">Показание удалено</string>
-    <string name="logout">Logout</string>
+    <string name="saving_data">Сохранение данных</string>
+    <string name="login_dialog_title">Сохранение данных в облаке</string>
+    <string name="login_dialog_message">Хотите ли вы сохранять данные приложения в облаке? Для этого нужно войти в аккаунт Google.</string>
+    <string name="login_dialog_positive">Да</string>
+    <string name="login_dialog_negative">Нет</string>
+    <string name="btn_logout">Выйти</string>
 </resources>

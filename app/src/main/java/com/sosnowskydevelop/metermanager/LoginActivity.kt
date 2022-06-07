@@ -1,12 +1,18 @@
 package com.sosnowskydevelop.metermanager
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
@@ -16,10 +22,13 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.sosnowskydevelop.metermanager.fragment.MeterListFragmentDirections
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var logoutBtn: Button
+    private lateinit var signInBtn: SignInButton
 
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
@@ -27,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
             try {
                 val account = task.getResult(ApiException::class.java)!!
                 firebaseAuthWithGoogle(account.idToken!!)
+                startMainActivity()
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.d("LoginActivity", "Fail")
@@ -50,7 +60,14 @@ class LoginActivity : AppCompatActivity() {
 
         val googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        val signInBtn: SignInButton = findViewById(R.id.btn_sign_in)
+        logoutBtn = findViewById(R.id.btn_logout)
+        logoutBtn.setOnClickListener {
+            auth.signOut()
+            val loginIntent = Intent(this, MainActivity::class.java)
+            loginIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(loginIntent)
+        }
+        signInBtn = findViewById(R.id.btn_sign_in)
         signInBtn.setOnClickListener {
             val signInIntent: Intent = googleSignInClient.signInIntent
             resultLauncher.launch(signInIntent)
@@ -66,11 +83,12 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI(user: FirebaseUser?) {
         if (user == null) {
-            return
+            logoutBtn.visibility = View.INVISIBLE
+            signInBtn.visibility = View.VISIBLE
+        } else {
+            logoutBtn.visibility = View.VISIBLE
+            signInBtn.visibility = View.INVISIBLE
         }
-
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
     }
 
     private fun firebaseAuthWithGoogle(idToken: String) {
@@ -84,5 +102,10 @@ class LoginActivity : AppCompatActivity() {
                     updateUI(null)
                 }
             }
+    }
+
+    private fun startMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 }

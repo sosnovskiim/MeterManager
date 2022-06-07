@@ -57,5 +57,10 @@
     <string name="reading_added">Reading added</string>
     <string name="reading_delete_dialog_message">Are you sure you want to delete this reading?</string>
     <string name="reading_delete_toast">Reading deleted</string>
-    <string name="logout">Logout</string>
+    <string name="saving_data">Saving data</string>
+    <string name="login_dialog_title">Saving data in the cloud</string>
+    <string name="login_dialog_message">Do you want to store application data in the cloud? To do this, you need to sign in to your Google account.</string>
+    <string name="login_dialog_positive">Yes</string>
+    <string name="login_dialog_negative">No</string>
+    <string name="btn_logout">Logout</string>
 </resources>
