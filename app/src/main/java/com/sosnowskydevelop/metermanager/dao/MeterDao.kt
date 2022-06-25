@@ -7,11 +7,11 @@ import com.sosnowskydevelop.metermanager.data.Meter
 @Dao
 interface MeterDao {
 
-    @Query("SELECT m._id, m.name, m.locationId, m.unit, v.[VALUE] AS lastReadingValue, d.[DATE] AS lastReadingDate " +
-           "FROM meter AS m " +
-           "LEFT JOIN (SELECT meterID, MAX(value) AS value, date FROM reading GROUP BY meterID, date) AS v ON m._id = v.meterId " +
-           "LEFT JOIN (SELECT meterID, MAX(date) AS date FROM reading GROUP BY meterID) AS d ON v.date = d.date AND m._id = d.meterID " +
-           "WHERE m.locationId = :locationID")
+    @Query("SELECT m._id, m.name, m.locationId, m.unit, max(r.value) AS lastReadingValue, max(r.date) AS lastReadingDate " +
+            "FROM meter AS m " +
+            "LEFT JOIN reading AS r ON m._id = r.meterId " +
+            "WHERE m.locationId = :locationID " +
+            "GROUP BY m._id, m.name, m.locationId, m.unit")
     fun getAllMetersByLocationID(locationID: Int): LiveData<List<Meter>>
 
     @Query("SELECT * FROM meter WHERE _id = :meterId")
